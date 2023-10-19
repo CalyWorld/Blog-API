@@ -6,6 +6,7 @@ interface Post extends Document {
   author: mongoose.Schema.Types.ObjectId;
   publishedDate: Date;
   isPublished: boolean;
+  imageUrl: string;
 }
 
 const postSchema = new Schema<Post>({
@@ -14,6 +15,7 @@ const postSchema = new Schema<Post>({
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Reference to the User model
   publishedDate: { type: Date, default: Date.now },
   isPublished: { type: Boolean, default: false },
+  imageUrl: { type: String },
 });
 
 module.exports = mongoose.model<Post>("Post", postSchema);
