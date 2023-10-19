@@ -6,8 +6,8 @@ interface User extends Document {
 }
 
 const userSchema = new Schema<User>({
-  username: { type: String, required: true },
-  password: { type: String, required: true },
+  username: { type: String, unique: true },
+  password: { type: String },
 });
 
 module.exports = mongoose.model<User>("User", userSchema);
