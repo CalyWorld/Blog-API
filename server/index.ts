@@ -1,33 +1,31 @@
-import express, { Request, Response, Application, NextFunction } from "express";
+import express, { Request, Response, Application } from "express";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
-import createError from "http-errors";
+import path from "path";
 import cookieParser from "cookie-parser";
 import session from "express-session";
-import path from "path";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import logger from "morgan";
 import mongoose from "mongoose";
-import UserModel from "./models/user";
+import userModel from "./models/user";
+import userRouter from "./routes/userRoute";
 
 // Load environment variables from .env file
 dotenv.config();
 
 const app: Application = express();
-const port: number = parseInt(process.env.PORT || "8000");
+const port: number = parseInt(process.env.PORT ?? "8000");
 
 mongoose.set("strictQuery", false);
 require("dotenv").config();
 
-const mongoDB: string = process.env.MONGODB_URI || "default_uri";
-console.log(mongoDB);
+const mongoDB: string = process.env.MONGODB_URI ?? "default_uri";
 main().catch((err) => console.log(err));
 
 async function main() {
   await mongoose.connect(mongoDB);
 }
-app.use(express.static(path.join(__dirname, "client", "dist")));
 app.use(logger("dev"));
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
@@ -35,15 +33,11 @@ app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
-});
 
 passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {
     try {
-      const user = await UserModel.findOne({ username: username });
-      console.log(user);
+      const user = await userModel.findOne({ username: username });
       if (!user) {
         return done(null, false, { message: "Incorrect Username" });
       }
@@ -65,37 +59,41 @@ passport.serializeUser((user: any, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await UserModel.findById(id);
+    const user = await userModel.findById(id);
     done(null, user);
   } catch (err) {
     done(err);
   }
 });
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Welcome to Express & TypeScript Server");
-});
+app.use(logger("dev"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/", userRouter);
 
 // Catch 404 and forward to error handler
-app.use(function (req: Request, res: Response, next: NextFunction) {
-  next(createError(404));
-});
+// app.use(function (req: Request, res: Response, next: NextFunction) {
+//   next(createError(404));
+// });
 
-// Error handler
-app.use(function (
-  err: Error & { status?: number },
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): void {
-  // Set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+// // Error handler
+// app.use(function (
+//   err: Error & { status?: number },
+//   req: Request,
+//   res: Response,
+//   next: NextFunction,
+// ): void {
+//   // Set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  // Render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
+//   // Render the error page
+//   res.status(err.status ?? 500);
+//   res.render("error");
+// });
 
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);

@@ -18,4 +18,5 @@ const postSchema = new Schema<Post>({
   imageUrl: { type: String },
 });
 
-module.exports = mongoose.model<Post>("Post", postSchema);
+const postModel = mongoose.model<Post>("Post", postSchema);
+export default postModel;
