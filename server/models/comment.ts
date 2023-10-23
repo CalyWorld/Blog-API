@@ -1,6 +1,6 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
-interface Comment extends Document {
+interface Comment {
   content: string;
   authorName: string;
   post: mongoose.Schema.Types.ObjectId;
@@ -14,5 +14,5 @@ const commentSchema = new Schema<Comment>({
   commentDate: { type: Date, default: Date.now },
 });
 
-const commentModel = mongoose.model<Comment>("Post", commentSchema);
-export default commentModel;
+const Comment = model("Post", commentSchema);
+export default Comment;
