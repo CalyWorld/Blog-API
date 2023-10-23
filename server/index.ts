@@ -8,8 +8,8 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import logger from "morgan";
 import mongoose from "mongoose";
-import userModel from "./models/user";
-import userRouter from "./routes/userRoute";
+import User from "./models/user";
+const userRouter = require("./routes/userRoute");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -37,7 +37,8 @@ app.use(cookieParser());
 passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {
     try {
-      const user = await userModel.findOne({ username: username });
+      const user = await User.findOne({ username: username });
+      console.log(user);
       if (!user) {
         return done(null, false, { message: "Incorrect Username" });
       }
@@ -59,7 +60,7 @@ passport.serializeUser((user: any, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await userModel.findById(id);
+    const user = await User.findById(id);
     done(null, user);
   } catch (err) {
     done(err);

@@ -1,28 +1,27 @@
 import { Request, Response, NextFunction } from "express";
-import userModel from "../models/user";
+import User from "../models/user";
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
-exports.get_user = asyncHandler(
+exports.getUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     // const user = req.user;
-    const user = await userModel.find().exec();
+    const user = await User.find().exec();
     console.log({ user: user });
     res.json(user);
-    // res.send("Welcome to Express & TypeScript Server");
   },
 );
 
-exports.signin_post = [
+exports.signInPost = [
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/signin",
   }),
 ];
 
-exports.signup_post = [
+exports.signUpPost = [
   body("username", "Username must not be empty and must be a valid email")
     .trim()
     .isLength({ min: 1 })
@@ -44,7 +43,7 @@ exports.signup_post = [
     };
     console.log(userInput);
     const errors = validationResult(req);
-    const existingUser = await userModel.findOne({
+    const existingUser = await User.findOne({
       username: userInput.username,
     });
     if (existingUser) {
@@ -61,12 +60,12 @@ exports.signup_post = [
         if (err) {
           return next(err);
         } else {
-          const user = new userModel({
+          const user = new User({
             username: req.body.username,
             password: hashedPassword,
           });
           try {
-            res.json(await user.save());
+            await user.save();
             res.redirect("/");
           } catch (err) {
             return next(err);

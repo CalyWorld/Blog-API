@@ -1,6 +1,6 @@
-import mongoose, { Schema, model } from "mongoose";
+import mongoose, { Schema, Document, model } from "mongoose";
 
-interface Post {
+interface IPost extends Document {
   title: string;
   content: string;
   author: mongoose.Schema.Types.ObjectId;
@@ -9,7 +9,7 @@ interface Post {
   imageUrl: string;
 }
 
-const postSchema = new Schema<Post>({
+const PostSchema = new Schema<IPost>({
   title: { type: String, required: true },
   content: { type: String, required: true },
   author: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // Reference to the User model
@@ -18,5 +18,9 @@ const postSchema = new Schema<Post>({
   imageUrl: { type: String },
 });
 
-const Post = model("Post", postSchema);
+PostSchema.virtual("url").get(function () {
+  return `/post/${this._id}`;
+});
+
+const Post = model<IPost>("Post", PostSchema);
 export default Post;
