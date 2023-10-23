@@ -546,8 +546,8 @@ video {
   align-items: center;
 }
 
-.justify-center {
-  justify-content: center;
+.justify-end {
+  justify-content: flex-end;
 }
 
 .justify-between {
@@ -558,22 +558,27 @@ video {
   gap: 1.25rem;
 }
 
-.gap-10 {
-  gap: 2.5rem;
-}
-
 .p-10 {
   padding: 2.5rem;
 }
 
-.blur-sm {
-  --tw-blur: blur(4px);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+.p-5 {
+  padding: 1.25rem;
+}
+
+.text-white {
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .blur-lg {
   --tw-blur: blur(16px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+}
+
+* {
+  box-sizing: border-box;
+  border: 0.1px solid red;
 }
 
 :root {

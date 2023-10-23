@@ -1,7 +1,11 @@
-function SignInForm() {
+import { NavProps } from "../pages/navPage";
+function SignInForm({ setModal }: NavProps) {
   return (
     <div className="form-card">
-      <form className="flex flex-col gap-5 items-center">
+      <div className="close-form flex justify-end p-5">
+        <button onClick={() => setModal(false)}>X</button>
+      </div>
+      <form className="flex flex-col gap-5 items-center p-5">
         <h1>Sign In</h1>
         <div className="form-group">
           <label htmlFor="username">username: </label>

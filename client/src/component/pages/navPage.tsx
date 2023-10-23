@@ -1,5 +1,5 @@
-interface NavProps {
-  openModal: boolean;
+export interface NavProps {
+  openModal?: boolean;
   setModal: (value: boolean) => void;
 }
 

@@ -8,7 +8,7 @@ function App() {
       <div className={`app-container ${openModal ? "blur-lg" : ""}`}>
         <Nav openModal={openModal} setModal={setModal} />
       </div>
-      {openModal && <SignInForm />}
+      {openModal && <SignInForm setModal={setModal} />}
     </>
   );
 }
