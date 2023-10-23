@@ -1,18 +1,18 @@
-import React from "react";
-import { Link } from "react-router-dom";
+interface NavProps {
+  openModal: boolean;
+  setModal: (value: boolean) => void;
+}
 
-function Nav() {
+function Nav({ setModal }: NavProps) {
   return (
     <header className="flex p-10 justify-between">
       <h1>Member</h1>
       <ul className="flex gap-5 items-center">
         <li>
-          <Link to="/signin">Sign In</Link>
+          <button onClick={() => setModal(true)}>Sign In</button>
         </li>
         <li>
-          <Link to="/getstarted">
-            <button>Get Started</button>
-          </Link>
+          <button>Get Started</button>
         </li>
       </ul>
     </header>

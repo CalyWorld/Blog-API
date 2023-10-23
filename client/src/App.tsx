@@ -1,16 +1,15 @@
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import "./App.css";
 import Nav from "./component/pages/navPage";
-
+import SignInForm from "./component/form/signInForm";
+import { useState } from "react";
 function App() {
+  const [openModal, setModal] = useState<boolean>(false);
   return (
-    <Router>
-      <div>
-        <Nav />
-        {/* <Route path="/signin" component={SignInComponent} />
-        <Route path="/getstarted" component={GetStartedComponent} /> */}
+    <>
+      <div className={`app-container ${openModal ? "blur-lg" : ""}`}>
+        <Nav openModal={openModal} setModal={setModal} />
       </div>
-    </Router>
+      {openModal && <SignInForm />}
+    </>
   );
 }
 
