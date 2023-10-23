@@ -4,13 +4,13 @@ const postController = require("../controllers/postController");
 
 //get all posts
 router.get("/", postController.getAllPosts);
-//get a specific post
-router.get("/:id", postController.getPostById);
 //create a post
 router.post("/create", postController.createPost);
+//get a specific post
+router.get("/:id", postController.getPostById);
 //edit a specific post
-router.put("/:id/update");
+router.put("/:id/update", postController.updatePost);
 //delete a post
-router.delete("/:id/delete");
+router.delete("/:id/delete", postController.deletePostById);
 
 module.exports = router;
