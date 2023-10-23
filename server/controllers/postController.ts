@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from "express";
-import User from "../models/user";
 import Post from "../models/post";
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");

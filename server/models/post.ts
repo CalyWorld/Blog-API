@@ -19,7 +19,7 @@ const PostSchema = new Schema<IPost>({
 });
 
 PostSchema.virtual("url").get(function () {
-  return `/post/${this._id}`;
+  return `/posts/${this._id}`;
 });
 
 const Post = model<IPost>("Post", PostSchema);
