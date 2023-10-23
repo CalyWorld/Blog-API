@@ -11,6 +11,7 @@ exports.getAllComments = asyncHandler(
   },
 );
 
+//get user comment
 exports.getCommentById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const commentById = await Comment.findById(req.params.id)
@@ -24,6 +25,7 @@ exports.getCommentById = asyncHandler(
   },
 );
 
+//create user comment
 exports.createComment = [
   body("content", "Content must not be empty.")
     .trim()
@@ -55,6 +57,7 @@ exports.createComment = [
   }),
 ];
 
+//update user comment
 exports.updateComment = [
   body("title", "Title must not be empty.")
     .trim()
@@ -100,6 +103,7 @@ exports.updateComment = [
   }),
 ];
 
+//delete user comment
 exports.deleteCommentById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     console.log({ selectedComment: req.params.id });

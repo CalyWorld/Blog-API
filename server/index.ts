@@ -1,4 +1,4 @@
-import express, { Request, Response, Application } from "express";
+import express, { Application } from "express";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import path from "path";
@@ -10,6 +10,8 @@ import logger from "morgan";
 import mongoose from "mongoose";
 import User from "./models/user";
 const userRouter = require("./routes/userRoute");
+const postRouter = require("./routes/postRoute");
+const commentRouter = require("./routes/commentRoute");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -74,27 +76,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", userRouter);
-
-// Catch 404 and forward to error handler
-// app.use(function (req: Request, res: Response, next: NextFunction) {
-//   next(createError(404));
-// });
-
-// // Error handler
-// app.use(function (
-//   err: Error & { status?: number },
-//   req: Request,
-//   res: Response,
-//   next: NextFunction,
-// ): void {
-//   // Set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get("env") === "development" ? err : {};
-
-//   // Render the error page
-//   res.status(err.status ?? 500);
-//   res.render("error");
-// });
+app.use("/posts", postRouter);
+app.use("/comments", commentRouter);
 
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);

@@ -23,6 +23,7 @@ exports.getPostById = asyncHandler(
   },
 );
 
+//create user post
 exports.createPost = [
   body("title", "Title must not be empty.")
     .trim()
@@ -61,6 +62,7 @@ exports.createPost = [
   }),
 ];
 
+//update user post
 exports.updatePost = [
   body("title", "Title must not be empty.")
     .trim()
@@ -107,6 +109,7 @@ exports.updatePost = [
   }),
 ];
 
+//delete user post
 exports.deletePostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     console.log({ selectedUser: req.params.id });

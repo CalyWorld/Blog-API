@@ -7,8 +7,8 @@ const { body, validationResult } = require("express-validator");
 
 exports.getUser = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    // const user = req.user;
-    const user = await User.find().exec();
+    const user = req.user;
+    // const user = await User.find().exec();
     console.log({ user: user });
     res.json(user);
   },
