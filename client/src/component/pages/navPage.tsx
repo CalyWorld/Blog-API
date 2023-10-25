@@ -1,18 +1,27 @@
-export interface NavProps {
-  openModal?: boolean;
-  setModal: (value: boolean) => void;
-}
+import NavProps from "../../interface/navProps";
 
-function Nav({ setModal }: NavProps) {
+function Nav({ setSignInForm, setSignUpForm }: NavProps) {
+  if (!setSignInForm) {
+    return null;
+  }
+  if (!setSignUpForm) {
+    return null;
+  }
   return (
     <header className="flex p-10 justify-between">
       <h1>Member</h1>
       <ul className="flex gap-5 items-center">
         <li>
-          <button onClick={() => setModal(true)}>Sign In</button>
+          <button onClick={() => setSignInForm(true)}>Sign In</button>
         </li>
         <li>
-          <button>Get Started</button>
+          <button
+            onClick={() => {
+              setSignUpForm(true);
+            }}
+          >
+            Get Started
+          </button>
         </li>
       </ul>
     </header>
