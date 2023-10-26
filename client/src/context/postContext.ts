@@ -1,20 +1,24 @@
 import { createContext } from "react";
-import mongoose from "mongoose";
 export interface Post {
-  title?: string | null;
-  content?: string | null;
-  author?: mongoose.Schema.Types.ObjectId | null;
-  publishedDate: Date;
+  title?: string;
+  content?: string;
+  author?: {
+    _id: string;
+    username: string;
+    password: string;
+  };
+  publishedDate: string;
   isPublished: boolean;
   imageUrl: string;
+  _id: string;
 }
 
 export interface PostContextType {
-  post: Post | null;
-  setPost: React.Dispatch<React.SetStateAction<Post | null>>;
+  posts: Post[];
+  setPost: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
-export const postContext = createContext<PostContextType>({
-  post: null,
+export const PostContext = createContext<PostContextType>({
+  posts: [],
   setPost: () => {},
 });

@@ -10,7 +10,7 @@ export interface UserContextType {
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
 }
 
-export const userContext = createContext<UserContextType>({
+export const UserContext = createContext<UserContextType>({
   user: null,
   setUser: () => {},
 });

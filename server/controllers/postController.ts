@@ -3,14 +3,15 @@ import Post from "../models/post";
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
+//get all posts
 exports.getAllPosts = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const allPosts = await Post.find().exec();
+    const allPosts = await Post.find().populate("author").exec();
     console.log({ posts: allPosts });
     res.json(allPosts);
   },
 );
-
+//get user post
 exports.getPostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const postById = await Post.findById(req.params.id)

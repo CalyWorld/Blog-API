@@ -1,6 +1,7 @@
 import { useState, ChangeEvent } from "react";
 import NavProps from "../interface/navProps";
-import { redirect } from "react-router-dom";
+import openSignUpModal from "../helper/openSignUpModal";
+
 function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
   const [user, setUser] = useState({
     username: "",
@@ -8,16 +9,6 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
   });
   if (!setSignInForm) {
     return null;
-  }
-  function openSignUpModal() {
-    if (!setSignInForm) {
-      return null;
-    }
-    setSignInForm(false);
-    if (!setSignUpForm) {
-      return null;
-    }
-    setSignUpForm(true);
   }
 
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
@@ -34,25 +25,21 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
         },
         body: JSON.stringify(user),
       });
-      if (response.ok) {
-        redirect("http://localhost:3000");
-      } else {
-        console.log("sign-in again");
-      }
+      console.log({ user: response });
     } catch (err) {
       console.log(err);
     }
   }
   return (
     <div className="form-card">
-      <div className="close-form flex justify-end p-5">
-        <button onClick={() => setSignInForm(false)}>X</button>
-      </div>
       <form
         className="flex flex-col gap-5 max-w-md mx-auto p-5 pb-8 bg-white rounded shadow-lg"
         onSubmit={handleSubmit}
       >
-        <h1 className="text-2xl font-semibold mb-5 text-center">Sign In</h1>
+        <div className="close-form flex justify-between items-center p-2">
+          <h1 className="text-2xl font-semibold">Sign In</h1>
+          <button onClick={() => setSignInForm(false)}>X</button>
+        </div>
 
         <div className="mb-4 gap-5 flex items-center">
           <label
@@ -107,7 +94,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
             <button
               className="text-blue-500"
               onClick={() => {
-                openSignUpModal();
+                openSignUpModal({ setSignInForm, setSignUpForm });
               }}
             >
               Sign Up
