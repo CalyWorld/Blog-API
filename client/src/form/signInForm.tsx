@@ -33,7 +33,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
   return (
     <div className="form-card">
       <form
-        className="flex flex-col gap-5 max-w-md mx-auto p-5 pb-8 bg-white rounded shadow-lg"
+        className="flex flex-col gap-5 max-w-lg mx-auto p-5 pb-8 bg-white rounded shadow-lg"
         onSubmit={handleSubmit}
       >
         <div className="close-form flex justify-between items-center p-2">
@@ -44,7 +44,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
         <div className="mb-4 gap-5 flex items-center">
           <label
             htmlFor="username"
-            className="w-1/4 px-2 py-1 text-bold font-medium text-gray-700"
+            className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700"
           >
             username:
           </label>
@@ -63,7 +63,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
         <div className="mb-4 gap-5 flex items-center">
           <label
             htmlFor="password"
-            className="w-1/4 px-2 py-1 text-bold font-medium text-gray-700"
+            className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700"
           >
             password:
           </label>

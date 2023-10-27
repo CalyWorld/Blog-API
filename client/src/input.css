@@ -3,7 +3,7 @@
 @tailwind utilities;
 * {
   box-sizing: border-box;
-  border: 0.1px solid red;
+  /* border: 0.1px solid red; */
 }
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -58,6 +58,15 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+.form-card {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  width: 70%;
+  padding: 3rem;
 }
 
 @media (prefers-color-scheme: light) {

@@ -54,7 +54,7 @@ function SignUpForm({ setSignInForm, setSignUpForm }: NavProps) {
         <div className="mb-4 gap-5 flex items-center">
           <label
             htmlFor="username"
-            className="w-1/4 px-2 py-1 text-bold font-medium text-gray-700"
+            className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700"
           >
             username:
           </label>
@@ -77,7 +77,7 @@ function SignUpForm({ setSignInForm, setSignUpForm }: NavProps) {
         <div className="mb-4 gap-5 flex items-center">
           <label
             htmlFor="password"
-            className="w-1/4 px-2 py-1 text-bold font-medium text-gray-700"
+            className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700"
           >
             password:
           </label>
@@ -100,7 +100,7 @@ function SignUpForm({ setSignInForm, setSignUpForm }: NavProps) {
         <div className="mb-4 gap-5 flex items-center">
           <label
             htmlFor="password"
-            className="w-1/4 px-2 py-1 text-bold font-medium text-gray-700"
+            className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700"
           >
             Confirm password:
           </label>

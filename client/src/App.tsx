@@ -20,23 +20,23 @@ function App() {
           <div
             className={`app-container ${
               openSignInForm || openSignUpForm ? "blur-sm" : ""
-            }`}
+            } flex flex-col gap-20 p-5`}
           >
             <Nav setSignInForm={setSignInForm} setSignUpForm={setSignUpForm} />
             <HomePage />
-            {openSignInForm && (
-              <SignInForm
-                setSignInForm={setSignInForm}
-                setSignUpForm={setSignUpForm}
-              />
-            )}
-            {openSignUpForm && (
-              <SignUpForm
-                setSignInForm={setSignInForm}
-                setSignUpForm={setSignUpForm}
-              />
-            )}
           </div>
+          {openSignInForm && (
+            <SignInForm
+              setSignInForm={setSignInForm}
+              setSignUpForm={setSignUpForm}
+            />
+          )}
+          {openSignUpForm && (
+            <SignUpForm
+              setSignInForm={setSignInForm}
+              setSignUpForm={setSignUpForm}
+            />
+          )}
         </PostContext.Provider>
       </UserContext.Provider>
     </>

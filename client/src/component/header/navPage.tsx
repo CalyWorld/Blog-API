@@ -8,7 +8,7 @@ function Nav({ setSignInForm, setSignUpForm }: NavProps) {
     return null;
   }
   return (
-    <header className="flex justify-between">
+    <header className="flex justify-between border-b border-black pb-3">
       <h1>Member</h1>
       <ul className="flex gap-5 items-center">
         <li>
