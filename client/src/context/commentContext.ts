@@ -4,7 +4,7 @@ export interface Comment {
   content?: string | null;
   author?: mongoose.Schema.Types.ObjectId | null;
   post: mongoose.Schema.Types.ObjectId | null;
-  commentDate: Date;
+  commentDate: string;
 }
 
 export interface CommentContextType {

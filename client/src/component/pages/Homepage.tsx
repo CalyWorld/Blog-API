@@ -1,8 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { PostContextType, PostContext } from "../../context/postContext";
-import formatDate from "../../helper/formatDate";
-import shortenWords from "../../helper/shortenWords";
-import formatUsername from "../../helper/formatUsername";
+import { formatDate, formatUsername, shortenWords } from "../../helper/format";
 export default function HomePage() {
   const { posts, setPost } = useContext<PostContextType>(PostContext);
 
