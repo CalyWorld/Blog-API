@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { PostContextType, PostContext } from "../../context/postContext";
 import formatDate from "../../helper/formatDate";
-
+import shortenWords from "../../helper/shortenWords";
+import formatUsername from "../../helper/formatUsername";
 export default function HomePage() {
   const { posts, setPost } = useContext<PostContextType>(PostContext);
 
@@ -30,13 +31,13 @@ export default function HomePage() {
         <div key={post._id} className="flex justify-between">
           <div className="left-side-bar w-48 flex flex-col justify-between gap-2">
             <p className="author-container text-xs font-bold text-gray-600">
-              {post.author?.username.split("@").shift() + ""}{" "}
+              {formatUsername(post.author?.username)}
             </p>
             <div className="title-container">
               <h2 className="text-2xl font-bold">{post.title}</h2>
             </div>
             <div className="content-container text-gray-400">
-              {post.content.split(".").shift() + "."}{" "}
+              {shortenWords(post.content)}
             </div>
             <div className="date-container text-xs text-gray-400">
               {formatDate(post.publishedDate)}
