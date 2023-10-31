@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Nav from "./component/header/navPage";
-import HomePage from "./component/pages/Homepage";
+import PostPage from "./component/pages/postPage";
 import { Post, PostContext } from "./context/postContext";
 import { User, UserContext } from "./context/userContext";
 import SignInForm from "./form/signInForm";
 import SignUpForm from "./form/signUpForm";
 import { useState, useMemo, useEffect } from "react";
-import ErrorPage from "./component/pages/ErrorPage";
-import PostPage from "./component/pages/Postpage";
+import ErrorPage from "./component/pages/errorPage";
+import PostDetail from "./component/pages/postDetail";
 
 function App() {
   const [user, setUser] = useState<User | null>({});
@@ -50,11 +50,11 @@ function App() {
       children: [
         {
           path: "/",
-          element: <HomePage />,
+          element: <PostPage />,
         },
         {
           path: "post/:postId",
-          element: <PostPage />,
+          element: <PostDetail />,
         },
       ],
     },
