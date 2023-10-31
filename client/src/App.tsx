@@ -1,21 +1,38 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Nav from "./component/header/navPage";
-import getPosts from "./hooks/fetchPost";
 import HomePage from "./component/pages/Homepage";
 import { Post, PostContext } from "./context/postContext";
 import { User, UserContext } from "./context/userContext";
 import SignInForm from "./form/signInForm";
 import SignUpForm from "./form/signUpForm";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import ErrorPage from "./component/pages/ErrorPage";
 import PostPage from "./component/pages/Postpage";
 
 function App() {
-  getPosts();
   const [user, setUser] = useState<User | null>({});
   const [posts, setPost] = useState<Post[]>([]);
   const [openSignInForm, setSignInForm] = useState<boolean>(false);
   const [openSignUpForm, setSignUpForm] = useState<boolean>(false);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await fetch("http://localhost:3000/posts");
+        if (response.ok) {
+          const posts = await response.json();
+          console.log(posts);
+          setPost(posts);
+        } else {
+          console.log("Failed to fetch posts");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchPosts();
+  }, []);
 
   // Use useMemo to memoize the context value
   const userContextValue = useMemo(() => ({ user, setUser }), [user]);
@@ -26,22 +43,20 @@ function App() {
       path: "/",
       element: (
         <>
-          <header className="flex justify-between border-b border-black pb-3">
-            <Nav setSignInForm={setSignInForm} setSignUpForm={setSignUpForm} />
-          </header>
-          <section>
-            <HomePage
-              setSignInForm={setSignInForm}
-              setSignUpForm={setSignUpForm}
-            />
-          </section>
+          <Nav setSignInForm={setSignInForm} setSignUpForm={setSignUpForm} />
         </>
       ),
       errorElement: <ErrorPage />,
-    },
-    {
-      path: "post/:postId",
-      element: <PostPage />,
+      children: [
+        {
+          path: "/",
+          element: <HomePage />,
+        },
+        {
+          path: "post/:postId",
+          element: <PostPage />,
+        },
+      ],
     },
   ]);
 
