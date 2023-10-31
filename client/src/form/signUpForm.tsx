@@ -72,50 +72,50 @@ function SignUpForm({ setSignInForm, setSignUpForm }: NavProps) {
               {errors.username?.message}
             </p>
           )}
+        </div>
 
-          <div className="input form">
-            <div className="mb-1 gap-5 flex items-center">
-              <label className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
-                Password:
-              </label>
-              <input
-                className={`w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
-                  errors.password ? "border-red-500" : ""
-                }`}
-                id="password"
-                type="text"
-                placeholder="Enter Password"
-                {...register("password")}
-              />
-            </div>
-            {errors.password && (
-              <p className="px-2 py-1 text-sm italic text-red-500 mb-4">
-                {errors.password?.message}
-              </p>
-            )}
-
-            <div className="input form">
-              <div className="mb-1 gap-5 flex items-center">
-                <label className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
-                  Confirm password:
-                </label>
-                <input
-                  className={`w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
-                    errors.confirmPassword ? "border-red-500" : ""
-                  }`}
-                  id="confirmPassword"
-                  type="text"
-                  placeholder="Confirm Password"
-                  {...register("confirmPassword")}
-                />
-              </div>
-              {errors.confirmPassword && (
-                <p className="px-2 py-1 text-sm italic text-red-500 mb-4">
-                  {errors.confirmPassword?.message}
-                </p>
-              )}
-            </div>
+        <div className="input form">
+          <div className="mb-1 gap-5 flex items-center">
+            <label className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
+              Password:
+            </label>
+            <input
+              className={`w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
+                errors.password ? "border-red-500" : ""
+              }`}
+              id="password"
+              type="text"
+              placeholder="Enter Password"
+              {...register("password")}
+            />
           </div>
+          {errors.password && (
+            <p className="px-2 py-1 text-sm italic text-red-500 mb-4">
+              {errors.password?.message}
+            </p>
+          )}
+        </div>
+
+        <div className="input form">
+          <div className="mb-1 gap-5 flex items-center">
+            <label className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
+              Confirm password:
+            </label>
+            <input
+              className={`w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
+                errors.confirmPassword ? "border-red-500" : ""
+              }`}
+              id="confirmPassword"
+              type="text"
+              placeholder="Confirm Password"
+              {...register("confirmPassword")}
+            />
+          </div>
+          {errors.confirmPassword && (
+            <p className="px-2 py-1 text-sm italic text-red-500 mb-4">
+              {errors.confirmPassword?.message}
+            </p>
+          )}
         </div>
         <div className="mb-4">
           <button

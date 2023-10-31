@@ -1,6 +1,6 @@
 import NavProps from "../../interface/navProps";
 
-function Nav({ setSignInForm, setSignUpForm }: NavProps) {
+export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
   if (!setSignInForm) {
     return null;
   }
@@ -8,7 +8,7 @@ function Nav({ setSignInForm, setSignUpForm }: NavProps) {
     return null;
   }
   return (
-    <header className="flex justify-between border-b border-black pb-3">
+    <>
       <h1>Member</h1>
       <ul className="flex gap-5 items-center">
         <li>
@@ -24,8 +24,6 @@ function Nav({ setSignInForm, setSignUpForm }: NavProps) {
           </button>
         </li>
       </ul>
-    </header>
+    </>
   );
 }
-
-export default Nav;

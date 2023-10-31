@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from "react";
+import { useState } from "react";
 import NavProps from "../interface/navProps";
 import openSignUpModal from "../helper/openSignUpModal";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -90,6 +90,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
             </p>
           )}
         </div>
+
         <div className="input form">
           <div className="mb-1 gap-5 flex items-center">
             <label className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
