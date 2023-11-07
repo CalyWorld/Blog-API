@@ -1,4 +1,3 @@
-import { useState } from "react";
 import NavProps from "../interface/navProps";
 import openSignUpModal from "../helper/openSignUpModal";
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -28,35 +27,32 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
     resolver: zodResolver(formSchema),
   });
 
-  const [user, setUser] = useState({
-    username: "",
-    password: "",
-  });
   if (!setSignInForm) {
     return null;
   }
 
-  // function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
-  //   const { id, value } = e.target;
-  //   setUser({ ...user, [id]: value });
-  // }
-  // async function onSubmit(e: React.FormEvent) {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await fetch("http://localhost:3000/signin", {
-  //       method: "Post",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(user),
-  //     });
-  //     console.log({ user: response });
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
+  const onSubmit: SubmitHandler<signInSchemaType> = async (data) => {
+    setSignInForm(false);
+    const user = { username: data.username, password: data.password };
+    try {
+      const response = await fetch("http://localhost:3000/signin", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
 
-  const onSubmit: SubmitHandler<signInSchemaType> = (data) => console.log(data);
+      if (response.ok) {
+        console.log("Sign-in successful");
+      } else {
+        const errorData = await response.json();
+        console.log(errorData.message);
+      }
+    } catch (error) {
+      console.log("Error occurred during sign-in:", error);
+    }
+  };
 
   return (
     <div className="form-card">
