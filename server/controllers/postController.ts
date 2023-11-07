@@ -7,7 +7,6 @@ const { body, validationResult } = require("express-validator");
 exports.getAllPosts = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const allPosts = await Post.find().populate("author").exec();
-    console.log({ posts: allPosts });
     res.json(allPosts);
   },
 );

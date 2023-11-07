@@ -12,6 +12,8 @@ import User from "./models/user";
 const userRouter = require("./routes/userRoute");
 const postRouter = require("./routes/postRoute");
 const commentRouter = require("./routes/commentRoute");
+const signInRouter = require("./routes/signInRoute");
+const signUpRouter = require("./routes/signUpRoute");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -49,7 +51,6 @@ passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {
     try {
       const user = await User.findOne({ username: username });
-      console.log(user);
       if (!user) {
         return done(null, false, { message: "Incorrect Username" });
       }
@@ -59,13 +60,14 @@ passport.use(
       }
       return done(null, user);
     } catch (err) {
-      console.error(err);
+      console.log(err);
       return done(err);
     }
   }),
 );
 
 passport.serializeUser((user: any, done) => {
+  console.log({ user: user });
   done(null, user.id);
 });
 
@@ -85,9 +87,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", userRouter);
+app.use("/signin", signInRouter);
+app.use("/signup", signUpRouter);
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
 
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);
 });
+
+module.exports = app;

@@ -24,10 +24,10 @@ export default function PostDetail() {
               <div>comment-icon</div>
             </div>
           </div>
-          <div className="image-container">
+          <div className="image-container flex flex-col items-center">
             <img
               src={post.imageUrl}
-              className=" w-full h-96"
+              className="h-full"
               alt="post-description"
             />
           </div>
