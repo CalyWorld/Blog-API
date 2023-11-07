@@ -39,7 +39,27 @@ function SignUpForm({ setSignInForm, setSignUpForm }: NavProps) {
     resolver: zodResolver(formSchema),
   });
 
-  const onSubmit: SubmitHandler<signUpSchemaType> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<signUpSchemaType> = async (data) => {
+    setSignUpForm(false);
+    const user = { username: data.username, password: data.password };
+    try {
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        body: JSON.stringify(user),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (response.ok) {
+        console.log("User data submitted successfully!");
+      } else {
+        console.error("User data submission failed.");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className="form-card">
@@ -58,7 +78,7 @@ function SignUpForm({ setSignInForm, setSignUpForm }: NavProps) {
               Username:
             </label>
             <input
-              className={`w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
+              className={`w-3/4 px-2 py-1 bg-white border rounded-md text-gray-700 shadow-sm focus:outline-none focus:border-blue-500 ${
                 errors.username ? "border-red-500" : ""
               }`}
               id="username"
