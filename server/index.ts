@@ -39,13 +39,12 @@ main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
 }
-app.use(logger("dev"));
+
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cookieParser());
 
 passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {
@@ -67,8 +66,8 @@ passport.use(
 );
 
 passport.serializeUser((user: any, done) => {
-  console.log({ user: user });
   done(null, user.id);
+  console.log({ user: user });
 });
 
 passport.deserializeUser(async (id, done) => {
