@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application, NextFunction } from "express";
 import dotenv from "dotenv";
 import bcrypt from "bcryptjs";
 import path from "path";
@@ -20,15 +20,6 @@ dotenv.config();
 
 const app: Application = express();
 const port: number = parseInt(process.env.PORT ?? "8000");
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept",
-  );
-  next();
-});
 
 mongoose.set("strictQuery", false);
 require("dotenv").config();
