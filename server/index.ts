@@ -1,5 +1,6 @@
-import express, { Application, NextFunction } from "express";
+import express, { Request, Response, NextFunction, Application } from "express";
 import dotenv from "dotenv";
+const cors = require("cors");
 import bcrypt from "bcryptjs";
 import path from "path";
 import cookieParser from "cookie-parser";
@@ -21,6 +22,13 @@ dotenv.config();
 const app: Application = express();
 const port: number = parseInt(process.env.PORT ?? "8000");
 
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  }),
+);
+
 mongoose.set("strictQuery", false);
 require("dotenv").config();
 
@@ -35,7 +43,6 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
 passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {

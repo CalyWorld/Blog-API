@@ -33,8 +33,8 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
 
   const onSubmit: SubmitHandler<signInSchemaType> = async (data) => {
     setSignInForm(false);
-    const user = { username: data.username, password: data.password };
     try {
+      const user = { username: data.username, password: data.password };
       const response = await fetch("http://localhost:3000/signin", {
         method: "POST",
         headers: {
@@ -42,6 +42,8 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
         },
         body: JSON.stringify(user),
       });
+
+      console.log(response);
 
       if (response.ok) {
         console.log("Sign-in successful");
