@@ -73,7 +73,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
               Username:
             </label>
             <input
-              className={`w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
+              className={`w-3/4 px-2 py-1 bg-white border rounded-md focus:outline-none focus:border-blue-500 ${
                 errors.username ? "border-red-500" : ""
               }`}
               id="username"

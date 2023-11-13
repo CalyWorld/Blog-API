@@ -65,7 +65,6 @@ passport.use(
 
 passport.serializeUser((user: any, done) => {
   done(null, user.id);
-  console.log({ user: user });
 });
 
 passport.deserializeUser(async (id, done) => {
@@ -83,11 +82,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", userRouter);
 app.use("/signin", signInRouter);
 app.use("/signup", signUpRouter);
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
+app.use("/", userRouter);
 
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);
