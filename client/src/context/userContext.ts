@@ -1,8 +1,8 @@
 import { createContext } from "react";
 
 export interface User {
-  username?: string | null;
-  password?: string | null;
+  username?: string;
+  password?: string;
 }
 
 export interface UserContextType {

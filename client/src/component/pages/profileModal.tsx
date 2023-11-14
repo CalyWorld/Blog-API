@@ -1,9 +1,9 @@
 import { CiBookmark } from "react-icons/ci";
 import { PiSignOutThin } from "react-icons/pi";
-import Cookies from "js-cookie";
+import { useContext } from "react";
+import { UserContext, UserContextType } from "../../context/userContext";
 export default function ProfileModal() {
-  const user = Cookies.get("userInfo");
-  console.log({ user_profile: user });
+  const { user } = useContext<UserContextType>(UserContext);
   return (
     <div className="profile-modal flex flex-col gap-5 right-0 mr-5 mt-8 w-64 h-64">
       <div className="flex items-center gap-2 p-4">
@@ -15,7 +15,7 @@ export default function ProfileModal() {
         <p>Sign out</p>
       </div>
       <div className="p-4">
-        <p>{user.username}</p>
+        <p>{user?.username}</p>
       </div>
     </div>
   );
