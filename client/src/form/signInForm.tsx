@@ -48,6 +48,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
         body: JSON.stringify(user),
       });
 
+      console.log(response);
       console.log(response.url);
 
       if (response.ok) {

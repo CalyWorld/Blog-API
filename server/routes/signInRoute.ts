@@ -11,7 +11,8 @@ router.post("/", (req: Request, res: Response, next) => {
       if (err) {
         return next(err);
       }
-      return res.redirect("/" + user.username);
+      console.log({ user_signed_in: req.user });
+      return res.redirect(`/${user.username}`);
     });
   })(req, res, next);
 });

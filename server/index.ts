@@ -86,7 +86,7 @@ app.use("/signin", signInRouter);
 app.use("/signup", signUpRouter);
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
-app.use("/", userRouter);
+app.use("/:user", userRouter);
 
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);
