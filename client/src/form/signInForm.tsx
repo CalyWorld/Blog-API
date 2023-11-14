@@ -3,6 +3,9 @@ import openSignUpModal from "../helper/openSignUpModal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useContext } from "react";
+import { UserContext, UserContextType } from "../context/userContext";
+import fetchUserData from "../hooks/fetchUser";
 
 const formSchema = z.object({
   username: z
@@ -27,6 +30,8 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
     resolver: zodResolver(formSchema),
   });
 
+  const { setUser } = useContext<UserContextType>(UserContext);
+
   if (!setSignInForm) {
     return null;
   }
@@ -43,10 +48,11 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
         body: JSON.stringify(user),
       });
 
-      console.log(response);
+      console.log(response.url);
 
       if (response.ok) {
         console.log("Sign-in successful");
+        fetchUserData(setUser, response.url);
       } else {
         const errorData = await response.json();
         console.log(errorData.message);

@@ -3,9 +3,7 @@ const router = express.Router();
 import passport = require("passport");
 
 router.post("/", (req: Request, res: Response, next) => {
-  passport.authenticate("local", (user: any) => {
-    console.log(user);
-    const username = user.username;
+  passport.authenticate("local", (err: any, user: any, info: any) => {
     if (!user) {
       return res.redirect("/signin");
     }
@@ -13,7 +11,7 @@ router.post("/", (req: Request, res: Response, next) => {
       if (err) {
         return next(err);
       }
-      return res.redirect("/" + username);
+      return res.redirect("/" + user.username);
     });
   })(req, res, next);
 });

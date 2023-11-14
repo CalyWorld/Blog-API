@@ -1,9 +1,27 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PostContextType, PostContext } from "../../context/postContext";
 import { formatDate, formatUsername, shortenWords } from "../../helper/format";
 import { Link } from "react-router-dom";
 export default function PostPage() {
-  const { posts } = useContext<PostContextType>(PostContext);
+  const { posts, setPost } = useContext<PostContextType>(PostContext);
+
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await fetch("http://localhost:3000/posts");
+        if (response.ok) {
+          const posts = await response.json();
+          setPost(posts);
+        } else {
+          console.log("Failed to fetch posts");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchPosts();
+  }, []);
 
   return (
     <div className="post-container flex flex-col gap-16">
