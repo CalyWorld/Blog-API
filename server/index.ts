@@ -9,6 +9,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import logger from "morgan";
 import mongoose from "mongoose";
+import MongoStore from "connect-mongo";
 import User from "./models/user";
 const userRouter = require("./routes/userRoute");
 const postRouter = require("./routes/postRoute");
@@ -39,10 +40,22 @@ async function main() {
   await mongoose.connect(mongoDB);
 }
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(
+  session({
+    secret: "cats",
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI,
+    }),
+  }),
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
 
 passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {
@@ -77,14 +90,12 @@ passport.deserializeUser(async (id, done) => {
 });
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/posts", postRouter);
 app.use("/signin", signInRouter);
 app.use("/signup", signUpRouter);
-app.use("/posts", postRouter);
 app.use("/comments", commentRouter);
 app.use("/:user", userRouter);
 
