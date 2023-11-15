@@ -16,6 +16,7 @@ const postRouter = require("./routes/postRoute");
 const commentRouter = require("./routes/commentRoute");
 const signInRouter = require("./routes/signInRoute");
 const signUpRouter = require("./routes/signUpRoute");
+const logOutRouter = require("./routes/logOutRoute");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -56,6 +57,8 @@ app.use(
     },
   }),
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {
@@ -92,14 +95,13 @@ passport.deserializeUser(async (id, done) => {
 app.use(logger("dev"));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(passport.initialize());
-app.use(passport.session());
 
-app.use("/posts", postRouter);
+app.use("/", userRouter);
 app.use("/signin", signInRouter);
 app.use("/signup", signUpRouter);
+app.use("/logout", logOutRouter);
 app.use("/comments", commentRouter);
-app.use("/", userRouter);
+app.use("/posts", postRouter);
 
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);

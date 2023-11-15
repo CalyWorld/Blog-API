@@ -3,29 +3,29 @@ import { PiSignOutThin } from "react-icons/pi";
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../../context/userContext";
 import Cookies from "js-cookie";
-export default function ProfileModal() {
+interface SetProfileModal {
+  setProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+export default function ProfileModal({ setProfileModal }: SetProfileModal) {
   const { user, setUser } = useContext<UserContextType>(UserContext);
 
   async function logOut() {
     try {
-      const response = await fetch(
-        `http://localhost:3000/${user?.username}/logout`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const response = await fetch(`http://localhost:3000/logout`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
-
-      console.log(response);
-      // if (response.ok) {
-      //   console.log("Logged-out successfully");
-      //   Cookies.remove("userInfo");
-      //   setUser(null);
-      // } else {
-      //   console.log("Logout failed");
-      // }
+        credentials: "include",
+      });
+      if (response.ok) {
+        const emptyUser = await response.json();
+        Cookies.remove("userInfo");
+        setUser(emptyUser);
+        setProfileModal(true);
+      } else {
+        console.log("Logout failed");
+      }
     } catch (error) {
       console.log("An error occurred during logout", error);
     }

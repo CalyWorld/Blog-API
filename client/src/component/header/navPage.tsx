@@ -42,7 +42,9 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
               >
                 <FaRegUser size={24} />
               </div>
-              {openProfileModal && <ProfileModal />}
+              {openProfileModal && (
+                <ProfileModal setProfileModal={setProfileModal} />
+              )}
             </li>
           </ul>
         </nav>

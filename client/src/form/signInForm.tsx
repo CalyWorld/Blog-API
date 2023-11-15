@@ -49,13 +49,9 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
         credentials: "include",
       });
 
-      console.log(response);
-      console.log(response.url);
-
       if (response.ok) {
         console.log("Sign-in successful");
         const user = await response.json();
-        console.log(user);
         Cookies.set(
           "userInfo",
           JSON.stringify({
