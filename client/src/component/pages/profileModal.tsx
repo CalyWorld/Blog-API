@@ -22,7 +22,7 @@ export default function ProfileModal({ setProfileModal }: SetProfileModal) {
         const emptyUser = await response.json();
         Cookies.remove("userInfo");
         setUser(emptyUser);
-        setProfileModal(true);
+        setProfileModal(false);
       } else {
         console.log("Logout failed");
       }
