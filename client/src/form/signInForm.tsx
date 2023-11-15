@@ -2,6 +2,7 @@ import NavProps from "../interface/navProps";
 import openSignUpModal from "../helper/openSignUpModal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { IoMdClose } from "react-icons/io";
 import * as z from "zod";
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../context/userContext";
@@ -78,7 +79,9 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
       >
         <div className="close-form flex justify-between items-center p-2">
           <h1 className="text-2xl font-semibold">Sign In</h1>
-          <button onClick={() => setSignInForm(false)}>X</button>
+          <button onClick={() => setSignInForm(false)}>
+            <IoMdClose />
+          </button>
         </div>
 
         <div className="input-form">

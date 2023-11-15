@@ -3,7 +3,7 @@
 @tailwind utilities;
 * {
   box-sizing: border-box;
-  /* border: 0.1px solid red; */
+  border: 0.1px solid red;
 }
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -70,6 +70,12 @@ button:focus-visible {
   background-color: rgb(235, 231, 231);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgb(244, 241, 241);
+  padding: 10px;
+  z-index: 1;
+}
+.comment-modal {
+  background-color: rgb(235, 231, 231);
+  border-radius: 8px;
   padding: 10px;
   z-index: 1;
 }

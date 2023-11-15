@@ -2,10 +2,13 @@ import { useParams } from "react-router-dom";
 import { formatDate, formatUsername } from "../../helper/format";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { Post } from "../../context/postContext";
+// import CommentModal from "./commentModal";
 import { useEffect, useState } from "react";
-export default function PostDetail() {
+import { CommentModal } from "./commentModal";
+export default function PostDetail({ setCommentModal }: CommentModal) {
   const { postId } = useParams();
   const [post, setPost] = useState<Post | null>(null);
+  // const [openCommentModal, setCommmentModal] = useState<Boolean>(false);
 
   useEffect(() => {
     getPostById(postId);
@@ -44,7 +47,12 @@ export default function PostDetail() {
                 {formatDate(post?.publishedDate || "")}
               </span>
               <div className="border-t border-b border-gray-300 p-2">
-                <div className="comment-icon-container">
+                <div
+                  className="comment-icon-container cursor-pointer"
+                  onClick={() => {
+                    setCommentModal(true);
+                  }}
+                >
                   <FaRegCommentAlt size={18} />
                 </div>
               </div>
@@ -59,7 +67,12 @@ export default function PostDetail() {
           </div>
           <div>{post?.content}</div>
           <div className="border-t border-b border-gray-300 p-2">
-            <div className="comment-icon-container">
+            <div
+              className="comment-icon-container cursor-pointer"
+              onClick={() => {
+                setCommentModal(true);
+              }}
+            >
               <FaRegCommentAlt size={18} />
             </div>
           </div>
@@ -69,6 +82,7 @@ export default function PostDetail() {
           <p>Getting Post Detail</p>
         </div>
       )}
+      {/* {openCommentModal && <CommentModal setCommentModal={setCommmentModal} />} */}
     </div>
   );
 }
