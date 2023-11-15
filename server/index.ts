@@ -51,11 +51,11 @@ app.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGODB_URI,
     }),
+    cookie: {
+      maxAge: 3600000, // 1 hour (adjust as needed)
+    },
   }),
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 passport.use(
   new LocalStrategy(async (username: string, password: string, done) => {
@@ -92,12 +92,14 @@ passport.deserializeUser(async (id, done) => {
 app.use(logger("dev"));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/posts", postRouter);
 app.use("/signin", signInRouter);
 app.use("/signup", signUpRouter);
 app.use("/comments", commentRouter);
-app.use("/:user", userRouter);
+app.use("/", userRouter);
 
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);

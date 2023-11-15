@@ -11,10 +11,7 @@ router.post("/", (req: Request, res: Response, next) => {
       if (err) {
         return next(err);
       }
-      console.log("user_signed_in", req.isAuthenticated());
-      console.log("user_signed_in", req.user);
-      console.log("Session after signing in: ", req.session);
-      return res.redirect(`/${user.username}`);
+      res.redirect("/");
     });
   })(req, res, next);
 });

@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../context/userContext";
-import fetchUserData from "../hooks/fetchUser";
+import Cookies from "js-cookie";
 
 const formSchema = z.object({
   username: z
@@ -46,6 +46,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(user),
+        credentials: "include",
       });
 
       console.log(response);
@@ -53,7 +54,17 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
 
       if (response.ok) {
         console.log("Sign-in successful");
-        fetchUserData(setUser, response.url);
+        const user = await response.json();
+        console.log(user);
+        Cookies.set(
+          "userInfo",
+          JSON.stringify({
+            username: user.username,
+            password: user.password,
+          }),
+          { expires: 29 },
+        );
+        setUser({ username: user?.username, password: user?.password });
       } else {
         const errorData = await response.json();
         console.log(errorData.message);
