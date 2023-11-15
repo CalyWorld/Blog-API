@@ -2,7 +2,7 @@ import { createContext } from "react";
 export interface Post {
   title: string;
   content: string;
-  author?: {
+  author: {
     _id: string;
     username: string;
     password: string;

@@ -29,7 +29,7 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
       {user?.username ? (
         <nav className="flex justify-between border-b border-black pb-3">
           <a href="/">
-            <h1>Member</h1>
+            <h1>Infinite Insights</h1>
           </a>
           <ul className="flex gap-8 items-center">
             <li>Write</li>
@@ -51,7 +51,7 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
       ) : (
         <nav className="flex justify-between border-b border-black pb-3">
           <a href="/">
-            <h1>Member</h1>
+            <h1>Infinite Insights</h1>
           </a>
           <ul className="flex gap-5 items-center">
             <li>
