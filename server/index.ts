@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction, Application } from "express";
+import express, { Application } from "express";
 import dotenv from "dotenv";
 const cors = require("cors");
 import bcrypt from "bcryptjs";

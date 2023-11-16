@@ -32,27 +32,19 @@ exports.createComment = [
     .isLength({ min: 1 })
     .escape(),
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const getcommentById = await Comment.findById(req.params.id)
-      .populate("post")
-      .exec();
-    if (!getcommentById) {
-      return null;
-    }
     const commentDetail = new Comment({
       content: req.body.content,
-      author: getcommentById.author,
-      post: getcommentById.post,
-      commentDate: Date.now(),
+      author: req.body.author,
+      post: req.body.post,
+      commentDate: req.body.commentDate,
     });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       errors.array();
       res.json(commentDetail);
     } else {
-      await commentDetail.save();
-      //this should go to the post where the comment is being made
-      res.redirect(`/post`);
-      console.log(commentDetail);
+      const newComment = await commentDetail.save();
+      res.redirect(`/comments/${newComment._id}`);
     }
   }),
 ];

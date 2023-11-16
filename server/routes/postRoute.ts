@@ -8,6 +8,8 @@ router.get("/", postController.getAllPosts);
 router.post("/create", postController.createPost);
 //get a specific post
 router.get("/:id", postController.getPostById);
+//get specific comment from post
+router.get("/comments/:id", postController.getCommentsFromPostId);
 //edit a specific post
 router.put("/:id/update", postController.updatePost);
 //delete a post

@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Post from "../models/post";
+import Comment from "../models/comment";
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -20,6 +21,19 @@ exports.getPostById = asyncHandler(
       console.log("no post by author");
     }
     res.json(postById);
+  },
+);
+
+//get comments from specific post
+exports.getCommentsFromPostId = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const commentsFromPostId = await Comment.find({ post: req.params.id })
+      .populate("author")
+      .exec();
+    if (commentsFromPostId === null) {
+      console.log("no comments from post");
+    }
+    res.json(commentsFromPostId);
   },
 );
 
