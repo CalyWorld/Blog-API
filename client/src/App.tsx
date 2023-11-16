@@ -8,7 +8,7 @@ import SignUpForm from "./form/signUpForm";
 import { useState, useMemo } from "react";
 import ErrorPage from "./component/pages/errorPage";
 import PostDetail from "./component/pages/postDetail";
-import CommentModal from "./component/pages/commentModal";
+import { CommentModal } from "./component/pages/commentModal";
 import { PostContext } from "./context/postDetailContext";
 import { PostComments, PostCommentsContext } from "./context/commentContext";
 
@@ -19,7 +19,7 @@ function App() {
   const [postComments, setPostComments] = useState<PostComments[]>([]);
   const [openSignInForm, setSignInForm] = useState<boolean>(false);
   const [openSignUpForm, setSignUpForm] = useState<boolean>(false);
-  const [openCommentModal, setCommmentModal] = useState<boolean>(false);
+  const [openCommentModal, setCommentModal] = useState<boolean>(false);
 
   // Use useMemo to memoize the context value
   const userContextValue = useMemo(() => ({ user, setUser }), [user]);
@@ -43,7 +43,7 @@ function App() {
         },
         {
           path: "post/:postId",
-          element: <PostDetail setCommentModal={setCommmentModal} />,
+          element: <PostDetail setCommentModal={setCommentModal} />,
         },
       ],
     },
@@ -76,7 +76,7 @@ function App() {
               />
             )}
             {openCommentModal && (
-              <CommentModal setCommentModal={setCommmentModal} />
+              <CommentModal setCommentModal={setCommentModal} />
             )}
           </PostCommentsContext.Provider>
         </PostContext.Provider>
