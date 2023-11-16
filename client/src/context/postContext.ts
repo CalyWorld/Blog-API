@@ -13,12 +13,12 @@ export interface Post {
   _id: string;
 }
 
-export interface PostContextType {
+export interface PostsContextType {
   posts: Post[];
-  setPost: React.Dispatch<React.SetStateAction<Post[]>>;
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
 }
 
-export const PostContext = createContext<PostContextType>({
+export const PostsContext = createContext<PostsContextType>({
   posts: [],
-  setPost: () => {},
+  setPosts: () => {},
 });

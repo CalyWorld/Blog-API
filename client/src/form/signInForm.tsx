@@ -58,10 +58,15 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
           JSON.stringify({
             username: user.username,
             password: user.password,
+            _id: user._id,
           }),
           { expires: 29 },
         );
-        setUser({ username: user?.username, password: user?.password });
+        setUser({
+          username: user?.username,
+          password: user?.password,
+          _id: user?._id,
+        });
       } else {
         const errorData = await response.json();
         console.log(errorData.message);

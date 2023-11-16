@@ -1,9 +1,9 @@
 import { useContext, useEffect } from "react";
-import { PostContextType, PostContext } from "../../context/postContext";
+import { PostsContextType, PostsContext } from "../../context/postContext";
 import { formatDate, formatUsername, shortenWords } from "../../helper/format";
 import { Link } from "react-router-dom";
 export default function PostPage() {
-  const { posts, setPost } = useContext<PostContextType>(PostContext);
+  const { posts, setPosts } = useContext<PostsContextType>(PostsContext);
 
   useEffect(() => {
     async function fetchPosts() {
@@ -11,7 +11,7 @@ export default function PostPage() {
         const response = await fetch("http://localhost:3000/posts");
         if (response.ok) {
           const posts = await response.json();
-          setPost(posts);
+          setPosts(posts);
         } else {
           console.log("Failed to fetch posts");
         }

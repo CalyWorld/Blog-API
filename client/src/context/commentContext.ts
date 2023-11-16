@@ -1,18 +1,23 @@
 import { createContext } from "react";
-import mongoose from "mongoose";
-export interface Comment {
+import { Post } from "./postContext";
+export interface PostComments {
   content?: string | null;
-  author?: mongoose.Schema.Types.ObjectId | null;
-  post: mongoose.Schema.Types.ObjectId | null;
+  author?: {
+    _id: string;
+    username: string;
+    password: string;
+  };
+  post: Post;
   commentDate: string;
+  _id: string;
 }
 
-export interface CommentContextType {
-  comment: Comment | null;
-  setComment: React.Dispatch<React.SetStateAction<Comment | null>>;
+export interface PostCommentsContextType {
+  postComments: PostComments[];
+  setPostComments: React.Dispatch<React.SetStateAction<PostComments[]>>;
 }
 
-export const commentContext = createContext<CommentContextType>({
-  comment: null,
-  setComment: () => {},
+export const PostCommentsContext = createContext<PostCommentsContextType>({
+  postComments: [],
+  setPostComments: () => {},
 });
