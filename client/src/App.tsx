@@ -12,6 +12,10 @@ import { CommentModal } from "./component/pages/commentModal";
 import { PostContext } from "./context/postDetailContext";
 import { PostComments, PostCommentsContext } from "./context/commentContext";
 import CreatePostPage from "./component/pages/createPostPage";
+import ProfilePage from "./component/pages/Profilepage";
+import { formatUsername } from "./helper/format";
+import PublishedPostPage from "./component/pages/publishedPostPage";
+import UnPublishedPostPage from "./component/pages/unpublishedPostPage";
 
 function App() {
   const [user, setUser] = useState<User | null>({});
@@ -30,6 +34,8 @@ function App() {
     () => ({ postComments, setPostComments }),
     [postComments, setPostComments],
   );
+  console.log(user);
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -49,6 +55,20 @@ function App() {
         {
           path: "post/:postId",
           element: <PostDetail setCommentModal={setCommentModal} />,
+        },
+        {
+          path: `/@${formatUsername(user?.username)}/*`,
+          element: <ProfilePage />,
+          children: [
+            {
+              path: "published",
+              element: <PublishedPostPage />,
+            },
+            {
+              path: "unpublished",
+              element: <UnPublishedPostPage />,
+            },
+          ],
         },
       ],
     },

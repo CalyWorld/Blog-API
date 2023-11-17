@@ -1,11 +1,14 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useContext } from "react";
+import { UserContext, UserContextType } from "../../context/userContext";
 
 const postSchema = z.object({
   title: z.string().min(4, { message: "Title is required" }),
   content: z.string().min(4, { message: "Content is required" }),
   imageUrl: z.union([z.string().url().nullish(), z.literal("")]),
+  isPublished: z.boolean(),
 });
 type postSchemaType = z.infer<typeof postSchema>;
 
@@ -18,9 +21,19 @@ export default function CreatePostPage() {
     resolver: zodResolver(postSchema),
   });
 
+  const { user } = useContext<UserContextType>(UserContext);
+
   const onSubmit: SubmitHandler<postSchemaType> = async (data) => {
     try {
-      console.log(data);
+      const postDetails = {
+        title: data.title,
+        content: data.content,
+        author: user?._id,
+        publishedDate: Date.now(),
+        isPublished: data.isPublished,
+        imageUrl: data.imageUrl,
+      };
+      console.log(postDetails);
     } catch (error) {
       console.log("submitted post succesfully");
     }
@@ -48,10 +61,21 @@ export default function CreatePostPage() {
         id="image-url"
         {...register("imageUrl")}
       ></input>
-      <div className="button-container flex justify-center">
+      <div className="flex items-center gap-2 p-3">
+        <input
+          type="checkbox"
+          id="isPublished"
+          className="bg-white"
+          {...register("isPublished")}
+        />
+        <label className="text-xl" htmlFor="publish-post-checkbox">
+          Publish Post
+        </label>
+      </div>
+      <div className="button-container flex justify-center p-3">
         <button
           type="submit"
-          className={`bg-green-700 text-white px-2 py-1 rounded ${
+          className={`bg-green-700 text-white px-2 py-1 rounded cursor-pointer ${
             Boolean(errors.content) ? "opacity-50 cursor-not-allowed" : ""
           }`}
           disabled={Boolean(errors.content)}

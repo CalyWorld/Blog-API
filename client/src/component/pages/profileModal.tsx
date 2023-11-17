@@ -2,13 +2,15 @@ import { CiBookmark } from "react-icons/ci";
 import { PiSignOutThin } from "react-icons/pi";
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../../context/userContext";
+import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
+import { formatUsername } from "../../helper/format";
 interface SetProfileModal {
   setProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function ProfileModal({ setProfileModal }: SetProfileModal) {
   const { user, setUser } = useContext<UserContextType>(UserContext);
-
+  let username = formatUsername(user?.username);
   async function logOut() {
     try {
       const response = await fetch(`http://localhost:3000/logout`, {
@@ -32,10 +34,12 @@ export default function ProfileModal({ setProfileModal }: SetProfileModal) {
   }
   return (
     <div className="profile-modal flex flex-col gap-5 right-0 mr-5 mt-8 w-64 h-64">
-      <div className="flex items-center gap-2 p-4">
-        <CiBookmark size={24} />
-        <p>Posts</p>
-      </div>
+      <Link to={`/@${username}`}>
+        <div className="flex items-center gap-2 p-4 cursor-pointer">
+          <CiBookmark size={24} />
+          <p>Posts</p>
+        </div>
+      </Link>
       <div className="flex flex-col p-4 gap-2">
         <div className="flex items-center gap-2">
           <PiSignOutThin size={24} />
