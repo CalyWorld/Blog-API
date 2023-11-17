@@ -14,7 +14,7 @@ const textAreaSchema = z.object({
   content: z.string().min(4, { message: "Content is required" }),
 });
 
-type commentConentSchemaType = z.infer<typeof textAreaSchema>;
+type commentContentSchemaType = z.infer<typeof textAreaSchema>;
 
 export default function CreateCommentModal({
   setCreateCommentModal,
@@ -23,14 +23,14 @@ export default function CreateCommentModal({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<commentConentSchemaType>({
+  } = useForm<commentContentSchemaType>({
     resolver: zodResolver(textAreaSchema),
   });
 
   const { user } = useContext<UserContextType>(UserContext);
   const { post } = useContext<PostContextType>(PostContext);
 
-  const onSubmit: SubmitHandler<commentConentSchemaType> = async (data) => {
+  const onSubmit: SubmitHandler<commentContentSchemaType> = async (data) => {
     try {
       const commentDetails = {
         content: data.content,

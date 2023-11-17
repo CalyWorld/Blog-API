@@ -8,6 +8,7 @@ import {
   PostCommentsContext,
   PostCommentsContextType,
 } from "../../context/commentContext";
+
 export default function PostDetail({ setCommentModal }: CommentModalType) {
   const { postId } = useParams();
   const { post, setPost } = useContext<PostContextType>(PostContext);
@@ -26,8 +27,6 @@ export default function PostDetail({ setCommentModal }: CommentModalType) {
 
     fetchData();
   }, [postId]);
-
-  console.log(post);
 
   async function getPostById(id: string | undefined) {
     try {
@@ -110,7 +109,10 @@ export default function PostDetail({ setCommentModal }: CommentModalType) {
                 setCommentModal(true);
               }}
             >
-              <FaRegCommentAlt size={18} />
+              <div className="flex gap-2 items-center">
+                <FaRegCommentAlt size={18} />
+                <span>{`${postComments.length}`}</span>
+              </div>
             </div>
           </div>
         </div>

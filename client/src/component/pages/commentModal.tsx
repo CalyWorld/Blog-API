@@ -32,7 +32,7 @@ export function CommentModal({ setCommentModal }: CommentModalType) {
           <IoMdClose size={24} />
         </div>
       </div>
-      <div>
+      <div className="transition-opacity duration-1000 ease-in-out">
         {user ? (
           createCommentModal ? (
             <CreateCommentModal setCreateCommentModal={setCreateCommentModal} />

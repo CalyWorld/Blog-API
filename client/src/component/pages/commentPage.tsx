@@ -1,5 +1,4 @@
 import { FaRegUser } from "react-icons/fa6";
-import { FaRegCommentAlt } from "react-icons/fa";
 import { useContext } from "react";
 import { formatDate, formatUsername } from "../../helper/format";
 import {
@@ -24,10 +23,6 @@ export default function CommentPage() {
                 </div>
               </div>
               <div>{comment.content}</div>
-              <div className="comment-icon-reply-container flex justify-between items-center">
-                <FaRegCommentAlt />
-                <div className="cursor-pointer">Reply</div>
-              </div>
             </div>
           </div>
         ))

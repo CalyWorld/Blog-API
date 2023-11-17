@@ -11,6 +11,7 @@ import PostDetail from "./component/pages/postDetail";
 import { CommentModal } from "./component/pages/commentModal";
 import { PostContext } from "./context/postDetailContext";
 import { PostComments, PostCommentsContext } from "./context/commentContext";
+import CreatePostPage from "./component/pages/createPostPage";
 
 function App() {
   const [user, setUser] = useState<User | null>({});
@@ -40,6 +41,10 @@ function App() {
         {
           path: "/",
           element: <PostPage />,
+        },
+        {
+          path: "/new-story",
+          element: <CreatePostPage />,
         },
         {
           path: "post/:postId",
