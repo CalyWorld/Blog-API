@@ -2,13 +2,24 @@ import { useContext, useEffect } from "react";
 import { PostsContextType, PostsContext } from "../../context/postContext";
 import { formatDate, formatUsername, shortenWords } from "../../helper/format";
 import { Link } from "react-router-dom";
+import { UserContext, UserContextType } from "../../context/userContext";
 export default function PostPage() {
   const { posts, setPosts } = useContext<PostsContextType>(PostsContext);
+  const { user } = useContext<UserContextType>(UserContext);
+
+  const otherUsersPublishedPosts = posts.filter(
+    (post) => post.isPublished === true && post.author?._id !== user?._id,
+  );
 
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await fetch("http://localhost:3000/posts");
+        const response = await fetch("http://localhost:3000/posts", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         if (response.ok) {
           const posts = await response.json();
           setPosts(posts);
@@ -25,8 +36,8 @@ export default function PostPage() {
 
   return (
     <div className="post-container flex flex-col gap-16">
-      {posts.length > 0 ? (
-        posts.map((post) => (
+      {otherUsersPublishedPosts.length > 0 ? (
+        otherUsersPublishedPosts.map((post) => (
           <Link to={`/post/${post._id}`} key={post._id}>
             <div className="flex justify-between">
               <div className="left-side-bar w-48 flex flex-col justify-between gap-2">
@@ -50,8 +61,8 @@ export default function PostPage() {
           </Link>
         ))
       ) : (
-        <div>
-          <p>Getting Post</p>
+        <div className="flex flex-col items-center">
+          <p>No Published Post</p>
         </div>
       )}
     </div>

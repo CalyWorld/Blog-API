@@ -9,6 +9,8 @@ import {
 } from "../../context/commentContext";
 export interface CommentModalType {
   setCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
+  postId?: string;
+  userId?: string;
 }
 export function CommentModal({ setCommentModal }: CommentModalType) {
   const [createCommentModal, setCreateCommentModal] = useState<boolean>(false);

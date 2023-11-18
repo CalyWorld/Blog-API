@@ -34,7 +34,12 @@ export default function ProfileModal({ setProfileModal }: SetProfileModal) {
   }
   return (
     <div className="profile-modal flex flex-col gap-5 right-0 mr-5 mt-8 w-64 h-64">
-      <Link to={`/@${username}`}>
+      <Link
+        to={`/@username`}
+        onClick={() => {
+          setProfileModal(false);
+        }}
+      >
         <div className="flex items-center gap-2 p-4 cursor-pointer">
           <CiBookmark size={24} />
           <p>Posts</p>

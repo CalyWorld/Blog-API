@@ -4,22 +4,21 @@ import { formatUsername } from "../../helper/format";
 import { Link, Routes, Route } from "react-router-dom";
 import PublishedPostPage from "./publishedPostPage";
 import UnPublishedPostPage from "./unpublishedPostPage";
-export default function ProfilePage() {
+import { CommentModalType } from "./commentModal";
+export default function ProfilePage({ setCommentModal }: CommentModalType) {
   const { user } = useContext<UserContextType>(UserContext);
 
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       <div className="header-container">
         <h1>{formatUsername(user?.username)}</h1>
       </div>
       <ul className="flex gap-2">
         <li>
-          <Link to={`/@${formatUsername(user?.username)}/published`}>
-            Published
-          </Link>
+          <Link to={`/@username/published`}>Published</Link>
         </li>
         <li>
-          <Link to="unpublished">Unpublished</Link>
+          <Link to={`/@username/Unpublished`}>Unpublished</Link>
         </li>
       </ul>
       <Routes>

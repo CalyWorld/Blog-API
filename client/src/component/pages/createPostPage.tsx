@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 const postSchema = z.object({
   title: z.string().min(4, { message: "Title is required" }),
@@ -21,6 +22,7 @@ export default function CreatePostPage() {
     resolver: zodResolver(postSchema),
   });
 
+  const navigate = useNavigate();
   const { user } = useContext<UserContextType>(UserContext);
 
   const onSubmit: SubmitHandler<postSchemaType> = async (data) => {
@@ -33,9 +35,21 @@ export default function CreatePostPage() {
         isPublished: data.isPublished,
         imageUrl: data.imageUrl,
       };
-      console.log(postDetails);
+      const response = await fetch("http://localhost:3000/posts/create", {
+        method: "POST",
+        body: JSON.stringify(postDetails),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        console.log("post submitted succesfully");
+        navigate("/@username/published");
+      } else {
+        console.error("User data submission failed.");
+      }
     } catch (error) {
-      console.log("submitted post succesfully");
+      console.log("submitted post succesfully", error);
     }
   };
   return (
