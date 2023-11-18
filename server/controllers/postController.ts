@@ -14,7 +14,7 @@ exports.getAllPosts = asyncHandler(
 //get user post
 exports.getPostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const postById = await Post.findById(req.params.id)
+    const postById = await Post.find({ author: req.params.id })
       .populate("author")
       .exec();
     if (postById === null) {
@@ -48,19 +48,12 @@ exports.createPost = [
     .isLength({ min: 1 })
     .escape(),
   body("isPublished", "isPublished should be a boolean").isBoolean(),
-  body("imageUrl", "URL must not be empty").trim().isLength({ min: 1 }),
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
-    const getPostById = await Post.findById(req.params.id)
-      .populate("author")
-      .exec();
-    if (!getPostById) {
-      return null;
-    }
     const postDetail = new Post({
       title: req.body.title,
       content: req.body.content,
-      author: getPostById.author,
-      publishedDate: Date.now(),
+      author: req.body.author,
+      publishedDate: req.body.publishedDate,
       isPublished: req.body.isPublished,
       imageUrl: req.body.imageUrl,
     });
@@ -70,8 +63,7 @@ exports.createPost = [
       res.json(postDetail);
     } else {
       await postDetail.save();
-      res.redirect(`/post/${postDetail._id}`);
-      console.log(postDetail);
+      res.redirect(`/posts/${postDetail._id}`);
     }
   }),
 ];
