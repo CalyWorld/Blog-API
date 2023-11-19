@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import NavProps from "../../interface/navProps";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa6";
 import ProfileModal from "../pages/profileModal";
 import Cookies from "js-cookie";
 import { UserContext, UserContextType } from "../../context/userContext";
 import { FaPenAlt } from "react-icons/fa";
-import { Link } from "react-router-dom";
 export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
   const { user, setUser } = useContext<UserContextType>(UserContext);
   const [openProfileModal, setProfileModal] = useState<boolean>(false);

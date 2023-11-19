@@ -51,11 +51,13 @@ export default function ProfilePage({
     }
   }
   return (
-    <div className="flex flex-col gap-5">
-      <div className="header-container">
-        <h1>{formatUsername(user?.username)}</h1>
-      </div>
-      <ul className="flex gap-2">
+    <nav className="flex flex-col gap-5">
+      <ul className="header-container">
+        <li>
+          <h1>{formatUsername(user?.username)}</h1>
+        </li>
+      </ul>
+      <ul className="flex gap-5 border-b border-black">
         <li>
           <Link to={`/@username/published`}>Published</Link>
         </li>
@@ -85,6 +87,6 @@ export default function ProfilePage({
           }
         />
       </Routes>
-    </div>
+    </nav>
   );
 }

@@ -538,14 +538,6 @@ video {
   position: fixed;
 }
 
-.absolute {
-  position: absolute;
-}
-
-.relative {
-  position: relative;
-}
-
 .right-0 {
   right: 0px;
 }
@@ -693,6 +685,10 @@ video {
 
 .gap-8 {
   gap: 2rem;
+}
+
+.gap-10 {
+  gap: 2.5rem;
 }
 
 .overflow-y-scroll {
@@ -922,7 +918,7 @@ video {
 
 * {
   box-sizing: border-box;
-  border: 0.1px solid red;
+  /* border: 0.1px solid red; */
 }
 
 :root {
