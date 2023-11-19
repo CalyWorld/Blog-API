@@ -1,27 +1,24 @@
-import { useContext, useEffect, useState } from "react";
-import { UserContext, UserContextType } from "../../context/userContext";
+import { useContext, useEffect } from "react";
+import {
+  UserContext,
+  UserContextType,
+  UserPostContext,
+  UserPostContextType,
+} from "../../context/userContext";
 import { Link } from "react-router-dom";
 import { formatUsername, formatDate, shortenWords } from "../../helper/format";
-import {
-  UserPublishedPostContext,
-  UserPublishedPostContextType,
-} from "../../context/userPostContext";
 export default function PublishedPostPage() {
   const { user } = useContext<UserContextType>(UserContext);
-  const { userPublishedPosts, setUserPublishedPost } =
-    useContext<UserPublishedPostContextType>(UserPublishedPostContext);
+  const { userPosts, setUserPost } =
+    useContext<UserPostContextType>(UserPostContext);
 
-  const publishedPost = userPublishedPosts?.filter(
-    (post) => post.isPublished === true,
-  );
-
-  console.log(userPublishedPosts);
+  const publishedPost = userPosts?.filter((post) => post.isPublished === true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const postResponse = await getPostById(user?._id);
-        setUserPublishedPost(postResponse);
+        const postResponse = await getUserPost(user?._id);
+        setUserPost(postResponse);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
@@ -30,7 +27,7 @@ export default function PublishedPostPage() {
     fetchData();
   }, [user]);
 
-  async function getPostById(id: string | undefined) {
+  async function getUserPost(id: string | undefined) {
     try {
       const response = await fetch(
         `http://localhost:3000/posts/user/post/${id}`,

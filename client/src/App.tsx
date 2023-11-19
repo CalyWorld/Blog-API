@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Nav from "./component/header/navPage";
 import PostPage from "./component/pages/postPage";
 import { Posts, PostsContext } from "./context/postsContext";
-import { User, UserContext } from "./context/userContext";
+import { User, UserContext, UserPostContext } from "./context/userContext";
 import SignInForm from "./form/signInForm";
 import SignUpForm from "./form/signUpForm";
 import { useState, useMemo } from "react";
@@ -15,17 +15,12 @@ import ProfilePage from "./component/pages/Profilepage";
 import PublishedPostPage from "./component/pages/publishedPostPage";
 import UnPublishedPostPage from "./component/pages/unpublishedPostPage";
 import UserPostDetail from "./component/pages/userPostDetail";
-import {
-  UserPublishedPostContext,
-  UserUnPublishedPostContext,
-} from "./context/userPostContext";
 
 function App() {
   const [user, setUser] = useState<User | null>({});
   const [posts, setPosts] = useState<Posts[]>([]);
   const [post, setPost] = useState<Post | null>(null);
-  const [userPublishedPosts, setUserPublishedPost] = useState<Posts[]>([]);
-  const [userUnPublishedPosts, setUserUnPublishedPost] = useState<Posts[]>([]);
+  const [userPosts, setUserPost] = useState<Posts[]>([]);
   const [openSignInForm, setSignInForm] = useState<boolean>(false);
   const [openSignUpForm, setSignUpForm] = useState<boolean>(false);
   const [openCommentModal, setCommentModal] = useState<boolean>(false);
@@ -34,13 +29,9 @@ function App() {
   const userContextValue = useMemo(() => ({ user, setUser }), [user]);
   const postsContextValue = useMemo(() => ({ posts, setPosts }), [posts]);
   const postContextValue = useMemo(() => ({ post, setPost }), [post, setPost]);
-  const userPublishedPostContextValue = useMemo(
-    () => ({ userPublishedPosts, setUserPublishedPost }),
-    [userPublishedPosts],
-  );
-  const userUnPublishedPostContextValue = useMemo(
-    () => ({ userUnPublishedPosts, setUserUnPublishedPost }),
-    [userUnPublishedPosts],
+  const userPostContextValue = useMemo(
+    () => ({ userPosts, setUserPost }),
+    [userPosts],
   );
 
   const router = createBrowserRouter([
@@ -89,38 +80,32 @@ function App() {
     <UserContext.Provider value={userContextValue}>
       <PostsContext.Provider value={postsContextValue}>
         <PostContext.Provider value={postContextValue}>
-          <UserPublishedPostContext.Provider
-            value={userPublishedPostContextValue}
-          >
-            <UserUnPublishedPostContext.Provider
-              value={userUnPublishedPostContextValue}
+          <UserPostContext.Provider value={userPostContextValue}>
+            <div
+              className={`app-container ${
+                openSignInForm || openSignUpForm || openCommentModal
+                  ? "blur-sm"
+                  : ""
+              } flex flex-col gap-20 p-5`}
             >
-              <div
-                className={`app-container ${
-                  openSignInForm || openSignUpForm || openCommentModal
-                    ? "blur-sm"
-                    : ""
-                } flex flex-col gap-20 p-5`}
-              >
-                <RouterProvider router={router} />
-              </div>
-              {openSignInForm && (
-                <SignInForm
-                  setSignInForm={setSignInForm}
-                  setSignUpForm={setSignUpForm}
-                />
-              )}
-              {openSignUpForm && (
-                <SignUpForm
-                  setSignInForm={setSignInForm}
-                  setSignUpForm={setSignUpForm}
-                />
-              )}
-              {openCommentModal && (
-                <CommentModal setCommentModal={setCommentModal} />
-              )}
-            </UserUnPublishedPostContext.Provider>
-          </UserPublishedPostContext.Provider>
+              <RouterProvider router={router} />
+            </div>
+            {openSignInForm && (
+              <SignInForm
+                setSignInForm={setSignInForm}
+                setSignUpForm={setSignUpForm}
+              />
+            )}
+            {openSignUpForm && (
+              <SignUpForm
+                setSignInForm={setSignInForm}
+                setSignUpForm={setSignUpForm}
+              />
+            )}
+            {openCommentModal && (
+              <CommentModal setCommentModal={setCommentModal} />
+            )}
+          </UserPostContext.Provider>
         </PostContext.Provider>
       </PostsContext.Provider>
     </UserContext.Provider>

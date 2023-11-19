@@ -70,14 +70,16 @@ export default function PostDetail({ setCommentModal }: CommentModalType) {
             </div>
           </div>
           <div className="image-container flex flex-col items-center">
-            <img
-              src={post?.post.imageUrl}
-              className="h-full"
-              alt="post-description"
-            />
+            {post.post.imageUrl && (
+              <img
+                src={post.post.imageUrl}
+                className="h-full"
+                alt="image-post"
+              />
+            )}
           </div>
           <div>{post?.post.content}</div>
-          <div className="border-t border-b border-gray-300 p-2">
+          <div className="border-t border-b border-gray-300">
             <div
               className="comment-icon-container cursor-pointer"
               onClick={() => {
