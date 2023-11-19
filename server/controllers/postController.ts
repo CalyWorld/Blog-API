@@ -28,11 +28,9 @@ exports.getUserPost = asyncHandler(
 //get specific post and comments
 exports.getPostAndCommentsById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const postId = req.params.id;
-
     const [post, comments] = await Promise.all([
-      Post.findById(postId).populate("author").exec(),
-      Comment.find({ post: postId }).populate("author").exec(),
+      Post.findById(req.params.id).populate("author").exec(),
+      Comment.find({ post: req.params.id }).populate("author").exec(),
     ]);
 
     if (!post) {

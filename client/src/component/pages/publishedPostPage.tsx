@@ -1,51 +1,14 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import {
-  UserContext,
-  UserContextType,
   UserPostContext,
   UserPostContextType,
 } from "../../context/userContext";
 import { Link } from "react-router-dom";
 import { formatUsername, formatDate, shortenWords } from "../../helper/format";
 export default function PublishedPostPage() {
-  const { user } = useContext<UserContextType>(UserContext);
-  const { userPosts, setUserPost } =
-    useContext<UserPostContextType>(UserPostContext);
+  const { userPosts } = useContext<UserPostContextType>(UserPostContext);
 
   const publishedPost = userPosts?.filter((post) => post.isPublished === true);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const postResponse = await getUserPost(user?._id);
-        setUserPost(postResponse);
-      } catch (error) {
-        console.log("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
-  }, [user]);
-
-  async function getUserPost(id: string | undefined) {
-    try {
-      const response = await fetch(
-        `http://localhost:3000/posts/user/post/${id}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        },
-      );
-      if (response.ok) {
-        return response.json();
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   return (
     <div className="post-container flex flex-col gap-5">

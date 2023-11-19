@@ -3,14 +3,16 @@ import { IoMdClose } from "react-icons/io";
 import CreateCommentModal from "./createCommentModal";
 import { UserContext, UserContextType } from "../../context/userContext";
 import CommentPage from "./commentPage";
-import { PostContext, PostContextType } from "../../context/postContext";
+import { Post } from "../../context/postContext";
+
 export interface CommentModalType {
+  openCommentModal?: boolean;
+  post?: Post | null;
   setCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export function CommentModal({ setCommentModal }: CommentModalType) {
+export function CommentModal({ setCommentModal, post }: CommentModalType) {
   const [createCommentModal, setCreateCommentModal] = useState<boolean>(false);
   const { user } = useContext<UserContextType>(UserContext);
-  const { post } = useContext<PostContextType>(PostContext);
 
   return (
     <div className="comment-modal flex flex-col gap-5 fixed right-0 top-0 w-96 h-screen rounded-md overflow-y-scroll">
@@ -46,7 +48,7 @@ export function CommentModal({ setCommentModal }: CommentModalType) {
           ""
         )}
       </div>
-      <CommentPage />
+      <CommentPage post={post} />
     </div>
   );
 }

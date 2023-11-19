@@ -2,10 +2,13 @@ import { useParams } from "react-router-dom";
 import { formatDate, formatUsername } from "../../helper/format";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useContext, useEffect } from "react";
-import { CommentModalType } from "./commentModal";
+import { CommentModalType, CommentModal } from "./commentModal";
 import { PostContext, PostContextType } from "../../context/postContext";
 
-export default function PostDetail({ setCommentModal }: CommentModalType) {
+export default function PostDetail({
+  openCommentModal,
+  setCommentModal,
+}: CommentModalType) {
   const { postId } = useParams();
   const { post, setPost } = useContext<PostContextType>(PostContext);
 
@@ -97,6 +100,9 @@ export default function PostDetail({ setCommentModal }: CommentModalType) {
         <div>
           <p>Getting Post Detail</p>
         </div>
+      )}
+      {openCommentModal && (
+        <CommentModal setCommentModal={setCommentModal} post={post} />
       )}
     </div>
   );

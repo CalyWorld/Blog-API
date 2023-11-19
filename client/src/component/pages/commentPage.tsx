@@ -1,11 +1,11 @@
 import { FaRegUser } from "react-icons/fa6";
-import { useContext } from "react";
+
 import { formatDate, formatUsername } from "../../helper/format";
-import { PostContext, PostContextType } from "../../context/postContext";
-
-export default function CommentPage() {
-  const { post } = useContext<PostContextType>(PostContext);
-
+import { Post } from "../../context/postContext";
+interface CommentPageType {
+  post?: Post | null;
+}
+export default function CommentPage({ post }: CommentPageType) {
   return (
     <div>
       {post?.comments ? (

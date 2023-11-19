@@ -8,7 +8,6 @@ import SignUpForm from "./form/signUpForm";
 import { useState, useMemo } from "react";
 import ErrorPage from "./component/pages/errorPage";
 import PostDetail from "./component/pages/postDetail";
-import { CommentModal } from "./component/pages/commentModal";
 import { PostContext, Post } from "./context/postContext";
 import CreatePostPage from "./component/pages/createPostPage";
 import ProfilePage from "./component/pages/Profilepage";
@@ -52,11 +51,21 @@ function App() {
         },
         {
           path: "post/:postId",
-          element: <PostDetail setCommentModal={setCommentModal} />,
+          element: (
+            <PostDetail
+              openCommentModal={openCommentModal}
+              setCommentModal={setCommentModal}
+            />
+          ),
         },
         {
           path: `/@username/*`,
-          element: <ProfilePage setCommentModal={setCommentModal} />,
+          element: (
+            <ProfilePage
+              openCommentModal={openCommentModal}
+              setCommentModal={setCommentModal}
+            />
+          ),
           children: [
             {
               path: "published",
@@ -68,7 +77,12 @@ function App() {
             },
             {
               path: "published/:postId",
-              element: <UserPostDetail setCommentModal={setCommentModal} />,
+              element: (
+                <UserPostDetail
+                  openCommentModal={openCommentModal}
+                  setCommentModal={setCommentModal}
+                />
+              ),
             },
           ],
         },
@@ -83,9 +97,7 @@ function App() {
           <UserPostContext.Provider value={userPostContextValue}>
             <div
               className={`app-container ${
-                openSignInForm || openSignUpForm || openCommentModal
-                  ? "blur-sm"
-                  : ""
+                openSignInForm || openSignUpForm ? "blur-sm" : ""
               } flex flex-col gap-20 p-5`}
             >
               <RouterProvider router={router} />
@@ -101,9 +113,6 @@ function App() {
                 setSignInForm={setSignInForm}
                 setSignUpForm={setSignUpForm}
               />
-            )}
-            {openCommentModal && (
-              <CommentModal setCommentModal={setCommentModal} />
             )}
           </UserPostContext.Provider>
         </PostContext.Provider>

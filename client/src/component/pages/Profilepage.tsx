@@ -1,13 +1,55 @@
-import { useContext } from "react";
-import { UserContext, UserContextType } from "../../context/userContext";
+import { useContext, useEffect } from "react";
+import {
+  UserContext,
+  UserContextType,
+  UserPostContext,
+  UserPostContextType,
+} from "../../context/userContext";
 import { formatUsername } from "../../helper/format";
 import { Link, Routes, Route } from "react-router-dom";
 import PublishedPostPage from "./publishedPostPage";
 import UnPublishedPostPage from "./unpublishedPostPage";
 import { CommentModalType } from "./commentModal";
 import UserPostDetail from "./userPostDetail";
-export default function ProfilePage({ setCommentModal }: CommentModalType) {
+export default function ProfilePage({
+  openCommentModal,
+  setCommentModal,
+}: CommentModalType) {
   const { user } = useContext<UserContextType>(UserContext);
+  const { setUserPost } = useContext<UserPostContextType>(UserPostContext);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const postResponse = await getUserPost(user?._id);
+        setUserPost(postResponse);
+      } catch (error) {
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [user]);
+
+  async function getUserPost(id: string | undefined) {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/posts/user/post/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        },
+      );
+      if (response.ok) {
+        return response.json();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
   return (
     <div className="flex flex-col gap-5">
       <div className="header-container">
@@ -26,7 +68,21 @@ export default function ProfilePage({ setCommentModal }: CommentModalType) {
         <Route path="unpublished" element={<UnPublishedPostPage />} />
         <Route
           path="published/:postId"
-          element={<UserPostDetail setCommentModal={setCommentModal} />}
+          element={
+            <UserPostDetail
+              openCommentModal={openCommentModal}
+              setCommentModal={setCommentModal}
+            />
+          }
+        />
+        <Route
+          path="unpublished/:postId"
+          element={
+            <UserPostDetail
+              openCommentModal={openCommentModal}
+              setCommentModal={setCommentModal}
+            />
+          }
         />
       </Routes>
     </div>
