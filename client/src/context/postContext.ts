@@ -1,24 +1,39 @@
 import { createContext } from "react";
+
 export interface Post {
-  title: string;
-  content: string;
-  author: {
+  post: {
+    title: string;
+    content: string;
+    author: {
+      _id: string;
+      username: string;
+      password: string;
+    };
+    publishedDate: string;
+    isPublished: boolean;
+    imageUrl: string;
     _id: string;
-    username: string;
-    password: string;
   };
-  publishedDate: string;
-  isPublished: boolean;
-  imageUrl: string;
-  _id: string;
+  comments: {
+    author: {
+      _id: string;
+      username: string;
+      password: string;
+    };
+    commentDate: string;
+    content: string;
+    __v: number;
+    _id: string;
+    post: string;
+  }[];
 }
 
-export interface PostsContextType {
-  posts: Post[];
-  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+export interface PostContextType {
+  post: Post | null;
+  setPost: React.Dispatch<React.SetStateAction<Post | null>>;
 }
 
-export const PostsContext = createContext<PostsContextType>({
-  posts: [],
-  setPosts: () => {},
+export const PostContext = createContext<PostContextType>({
+  post: null,
+  setPost: () => {},
 });

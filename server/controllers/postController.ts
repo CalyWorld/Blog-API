@@ -11,8 +11,9 @@ exports.getAllPosts = asyncHandler(
     res.json(allPosts);
   },
 );
+
 //get user post
-exports.getPostById = asyncHandler(
+exports.getUserPost = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const postById = await Post.find({ author: req.params.id })
       .populate("author")
@@ -24,16 +25,22 @@ exports.getPostById = asyncHandler(
   },
 );
 
-//get comments from specific post
-exports.getCommentsFromPostId = asyncHandler(
+//get specific post and comments
+exports.getPostAndCommentsById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const commentsFromPostId = await Comment.find({ post: req.params.id })
-      .populate("author")
-      .exec();
-    if (commentsFromPostId === null) {
-      console.log("no comments from post");
+    const postId = req.params.id;
+
+    const [post, comments] = await Promise.all([
+      Post.findById(postId).populate("author").exec(),
+      Comment.find({ post: postId }).populate("author").exec(),
+    ]);
+
+    if (!post) {
+      console.log("No post found with the given ID");
+      return res.status(404).json({ error: "No post found with the given ID" });
     }
-    res.json(commentsFromPostId);
+
+    res.json({ post, comments });
   },
 );
 

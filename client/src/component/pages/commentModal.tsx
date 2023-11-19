@@ -3,27 +3,21 @@ import { IoMdClose } from "react-icons/io";
 import CreateCommentModal from "./createCommentModal";
 import { UserContext, UserContextType } from "../../context/userContext";
 import CommentPage from "./commentPage";
-import {
-  PostCommentsContext,
-  PostCommentsContextType,
-} from "../../context/commentContext";
+import { PostContext, PostContextType } from "../../context/postContext";
 export interface CommentModalType {
   setCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
-  postId?: string;
-  userId?: string;
 }
 export function CommentModal({ setCommentModal }: CommentModalType) {
   const [createCommentModal, setCreateCommentModal] = useState<boolean>(false);
   const { user } = useContext<UserContextType>(UserContext);
-  const { postComments } =
-    useContext<PostCommentsContextType>(PostCommentsContext);
+  const { post } = useContext<PostContextType>(PostContext);
 
   return (
     <div className="comment-modal flex flex-col gap-5 fixed right-0 top-0 w-96 h-screen rounded-md overflow-y-scroll">
       <div className="flex justify-between p-2">
         <div className="flex gap-2">
           <h2 className="font-bold">Response</h2>
-          <span>{`(${postComments.length})`}</span>
+          <span>{`(${post?.comments.length})`}</span>
         </div>
         <div
           className="cursor-pointer"

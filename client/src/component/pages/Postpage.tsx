@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { PostsContextType, PostsContext } from "../../context/postContext";
+import { PostsContextType, PostsContext } from "../../context/postsContext";
 import { formatDate, formatUsername, shortenWords } from "../../helper/format";
 import { Link } from "react-router-dom";
 import { UserContext, UserContextType } from "../../context/userContext";
@@ -55,7 +55,13 @@ export default function PostPage() {
                 </div>
               </div>
               <div className="right-side-bar w-36">
-                <img src={post.imageUrl} className="h-full" alt="image-post" />
+                {post.imageUrl && (
+                  <img
+                    src={post.imageUrl}
+                    className="h-full"
+                    alt="image-post"
+                  />
+                )}
               </div>
             </div>
           </Link>

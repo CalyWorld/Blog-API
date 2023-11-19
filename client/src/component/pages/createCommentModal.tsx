@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { UserContext, UserContextType } from "../../context/userContext";
 import { formatUsername } from "../../helper/format";
-import { PostContext, PostContextType } from "../../context/postDetailContext";
+import { PostContext, PostContextType } from "../../context/postContext";
 interface CreateCommentModal {
   setCreateCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -35,7 +35,7 @@ export default function CreateCommentModal({
       const commentDetails = {
         content: data.content,
         author: user?._id,
-        post: post?._id,
+        post: post?.post._id,
         commentDate: Date.now(),
       };
       const response = await fetch("http://localhost:3000/comments/create", {

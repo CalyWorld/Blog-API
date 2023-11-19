@@ -1,18 +1,27 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext, UserContextType } from "../../context/userContext";
-import { Post } from "../../context/postContext";
 import { Link } from "react-router-dom";
 import { formatUsername, formatDate, shortenWords } from "../../helper/format";
+import {
+  UserPublishedPostContext,
+  UserPublishedPostContextType,
+} from "../../context/userPostContext";
 export default function PublishedPostPage() {
   const { user } = useContext<UserContextType>(UserContext);
-  const [userPosts, setUserPost] = useState<Post[] | null>([]);
+  const { userPublishedPosts, setUserPublishedPost } =
+    useContext<UserPublishedPostContextType>(UserPublishedPostContext);
 
-  console.log("gotten-user-post", userPosts);
+  const publishedPost = userPublishedPosts?.filter(
+    (post) => post.isPublished === true,
+  );
+
+  console.log(userPublishedPosts);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const postResponse = await getPostById(user?._id);
-        setUserPost(postResponse);
+        setUserPublishedPost(postResponse);
       } catch (error) {
         console.log("Error fetching data:", error);
       }
@@ -23,12 +32,16 @@ export default function PublishedPostPage() {
 
   async function getPostById(id: string | undefined) {
     try {
-      const response = await fetch(`http://localhost:3000/posts/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `http://localhost:3000/posts/user/post/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
         },
-      });
+      );
       if (response.ok) {
         return response.json();
       }
@@ -38,9 +51,9 @@ export default function PublishedPostPage() {
   }
 
   return (
-    <div className="post-container flex flex-col gap-16">
-      {userPosts ? (
-        userPosts.map((post) => (
+    <div className="post-container flex flex-col gap-5">
+      {publishedPost?.length ? (
+        publishedPost.map((post) => (
           <Link to={`/@username/published/${post._id}`} key={post._id}>
             <div className="flex justify-between">
               <div className="left-side-bar w-48 flex flex-col justify-between gap-2">
@@ -58,7 +71,13 @@ export default function PublishedPostPage() {
                 </div>
               </div>
               <div className="right-side-bar w-36">
-                <img src={post.imageUrl} className="h-full" alt="image-post" />
+                {post.imageUrl && (
+                  <img
+                    src={post.imageUrl}
+                    className="h-full"
+                    alt="image-post"
+                  />
+                )}
               </div>
             </div>
           </Link>

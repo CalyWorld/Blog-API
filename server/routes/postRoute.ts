@@ -6,10 +6,10 @@ const postController = require("../controllers/postController");
 router.get("/", postController.getAllPosts);
 //create a post
 router.post("/create", postController.createPost);
+//get user post
+router.get("/user/post/:id", postController.getUserPost);
 //get a specific post
-router.get("/:id", postController.getPostById);
-//get specific comment from post
-router.get("/comments/:id", postController.getCommentsFromPostId);
+router.get("/:id", postController.getPostAndCommentsById);
 //edit a specific post
 router.put("/:id/update", postController.updatePost);
 //delete a post

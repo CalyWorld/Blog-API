@@ -5,9 +5,9 @@ import { Link, Routes, Route } from "react-router-dom";
 import PublishedPostPage from "./publishedPostPage";
 import UnPublishedPostPage from "./unpublishedPostPage";
 import { CommentModalType } from "./commentModal";
+import UserPostDetail from "./userPostDetail";
 export default function ProfilePage({ setCommentModal }: CommentModalType) {
   const { user } = useContext<UserContextType>(UserContext);
-
   return (
     <div className="flex flex-col gap-5">
       <div className="header-container">
@@ -24,6 +24,10 @@ export default function ProfilePage({ setCommentModal }: CommentModalType) {
       <Routes>
         <Route path="published" element={<PublishedPostPage />} />
         <Route path="unpublished" element={<UnPublishedPostPage />} />
+        <Route
+          path="published/:postId"
+          element={<UserPostDetail setCommentModal={setCommentModal} />}
+        />
       </Routes>
     </div>
   );
