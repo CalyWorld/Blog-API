@@ -4,14 +4,15 @@ import { formatDate, formatUsername } from "../../helper/format";
 import { FaRegCommentAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Post } from "../../context/postContext";
-
+import { BsThreeDots } from "react-icons/bs";
+import UtilityPage from "./utilityPage";
 export default function UserPostDetail({
   openCommentModal,
   setCommentModal,
 }: CommentModalType) {
   const { postId } = useParams();
   const [post, setPost] = useState<Post | null>(null);
-
+  const [openUtilites, setOpenUtility] = useState<boolean>(false);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -56,17 +57,24 @@ export default function UserPostDetail({
               <span className="text-sm">
                 {formatDate(post?.post.publishedDate || "")}
               </span>
-              <div className="border-t border-b border-gray-300">
+              <div className="flex justify-between items-center border-t border-b border-gray-300">
                 <div
-                  className="comment-icon-container cursor-pointer"
+                  className="comment-icon-container flex gap-2 items-center cursor-pointer"
                   onClick={() => {
                     setCommentModal(true);
                   }}
                 >
-                  <div className="flex gap-2 items-center">
-                    <FaRegCommentAlt size={18} />
-                    <span>{`${post.comments.length}`}</span>
-                  </div>
+                  <FaRegCommentAlt size={18} />
+                  <span>{`${post.comments.length}`}</span>
+                </div>
+                <div
+                  className="relative utility-icon-container cursor-pointer"
+                  onClick={() => {
+                    setOpenUtility(!openUtilites);
+                  }}
+                >
+                  <BsThreeDots size={18} />
+                  {openUtilites && <UtilityPage />}
                 </div>
               </div>
             </div>

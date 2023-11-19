@@ -10,7 +10,7 @@ import ErrorPage from "./component/pages/errorPage";
 import PostDetail from "./component/pages/postDetail";
 import { PostContext, Post } from "./context/postContext";
 import CreatePostPage from "./component/pages/createPostPage";
-import ProfilePage from "./component/pages/Profilepage";
+import ProfilePage from "./component/pages/profilepage";
 import PublishedPostPage from "./component/pages/publishedPostPage";
 import UnPublishedPostPage from "./component/pages/unpublishedPostPage";
 import UserPostDetail from "./component/pages/userPostDetail";

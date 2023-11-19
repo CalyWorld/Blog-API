@@ -11,7 +11,7 @@ export default function PublishedPostPage() {
   const publishedPost = userPosts?.filter((post) => post.isPublished === true);
 
   return (
-    <div className="post-container flex flex-col gap-5">
+    <div className="post-container flex flex-col gap-20">
       {publishedPost?.length ? (
         publishedPost.map((post) => (
           <Link to={`/@username/published/${post._id}`} key={post._id}>
