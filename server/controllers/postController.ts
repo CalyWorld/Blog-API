@@ -125,6 +125,6 @@ exports.deletePostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     console.log({ selectedUser: req.params.id });
     await Post.findByIdAndRemove(req.params.id);
-    res.redirect("/post");
+    res.redirect("/posts");
   },
 );
