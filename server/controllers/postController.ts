@@ -73,7 +73,7 @@ exports.createPost = [
   }),
 ];
 
-//update user post
+//update post
 exports.updatePost = [
   body("title", "Title must not be empty.")
     .trim()
@@ -84,7 +84,6 @@ exports.updatePost = [
     .isLength({ min: 1 })
     .escape(),
   body("isPublished", "isPublished should be a boolean").isBoolean(),
-  body("imageUrl", "URL must not be empty").trim().isLength({ min: 1 }),
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
     const getPostById = await Post.findById(req.params.id)
       .populate("author")
@@ -115,6 +114,84 @@ exports.updatePost = [
         return null;
       }
       res.redirect(`/post/${updatedPost._id}`);
+      console.log(updatedPost);
+    }
+  }),
+];
+
+//update user post
+exports.updatePost = [
+  body("title", "Title must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("content", "Content must not be empty.")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  body("isPublished", "isPublished should be a boolean").isBoolean(),
+  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const getPostById = await Post.findById(req.params.id)
+      .populate("author")
+      .exec();
+    if (!getPostById) {
+      return null;
+    }
+    const postDetail = new Post({
+      title: req.body.title,
+      content: req.body.content,
+      author: getPostById.author,
+      publishedDate: Date.now(),
+      isPublished: req.body.isPublished,
+      imageUrl: req.body.imageUrl,
+      _id: req.params.id,
+    });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      errors.array();
+      res.json(postDetail);
+    } else {
+      const updatedPost = await Post.findByIdAndUpdate(
+        req.params.id,
+        postDetail,
+        {},
+      );
+      if (!updatedPost) {
+        return null;
+      }
+      res.redirect(`/post/${updatedPost._id}`);
+      console.log(updatedPost);
+    }
+  }),
+];
+
+//update user publish post
+exports.updatePostPublicationStatus = [
+  body("isPublished", "isPublished should be a boolean").isBoolean(),
+  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const postDetail = new Post({
+      title: req.body.title,
+      content: req.body.content,
+      author: req.body.author,
+      publishedDate: req.body.publishedDate,
+      isPublished: req.body.isPublished,
+      imageUrl: req.body.imageUrl,
+      _id: req.body.id,
+    });
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      errors.array();
+      res.json(postDetail);
+    } else {
+      const updatedPost = await Post.findByIdAndUpdate(
+        req.params.id,
+        postDetail,
+        {},
+      );
+      if (!updatedPost) {
+        return null;
+      }
+      res.redirect(`/posts/${updatedPost._id}`);
       console.log(updatedPost);
     }
   }),

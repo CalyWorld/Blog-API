@@ -74,7 +74,7 @@ export default function UserPostDetail({
                   }}
                 >
                   <BsThreeDots size={18} />
-                  {openUtilites && <UtilityPage id={post?.post._id} />}
+                  {openUtilites && <UtilityPage post={post} />}
                 </div>
               </div>
             </div>
