@@ -29,6 +29,7 @@ export default function UserPostDetail({
   async function getPostById(id: string | undefined) {
     try {
       const response = await fetch(`http://localhost:3000/posts/${id}`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },

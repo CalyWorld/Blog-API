@@ -13,10 +13,6 @@ router.get("/:id", postController.getPostAndCommentsById);
 //edit a specific post
 router.put("/:id/update", postController.updatePost);
 //edit publication status for a specific post
-router.put(
-  "/:id/publicationStatus",
-  postController.updatePostPublicationStatus,
-);
 //delete a post
 router.delete("/:id/delete", postController.deletePostById);
 

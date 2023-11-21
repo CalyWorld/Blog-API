@@ -27,7 +27,7 @@ export default function UtilityPage({ post }: UtlityPageProp) {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/posts/${post.post._id}/publicationStatus`,
+        `http://localhost:3000/posts/${post.post._id}/update`,
         {
           method: "PUT",
           headers: {
@@ -72,7 +72,7 @@ export default function UtilityPage({ post }: UtlityPageProp) {
         <AiOutlineDelete size={18} />
         <p>Delete</p>
       </div>
-      <div>delete Post</div>
+      <div>edit Post</div>
       <div
         className="flex items-center gap-2"
         onClick={() => {

@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Nav from "./component/header/navPage";
-import PostPage from "./component/pages/postPage";
+import PostPage from "./component/pages/PostPage.1";
 import { Posts, PostsContext } from "./context/postsContext";
 import { User, UserContext, UserPostContext } from "./context/userContext";
 import SignInForm from "./form/signInForm";
