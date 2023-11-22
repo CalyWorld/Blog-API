@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   UserContext,
   UserContextType,
@@ -17,6 +17,7 @@ export default function ProfilePage({
 }: CommentModalType) {
   const { user } = useContext<UserContextType>(UserContext);
   const { setUserPost } = useContext<UserPostContextType>(UserPostContext);
+  const [activeLink, setActiveLink] = useState("published");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,19 +58,39 @@ export default function ProfilePage({
           <h1>{formatUsername(user?.username)}</h1>
         </li>
       </ul>
-      <ul className="flex gap-5 border-b border-black">
-        <li>
-          <Link to={`/user/${user?._id}/published`}>Published</Link>
+      <ul className="flex gap-5 border-b border-gray-400">
+        <li
+          className={
+            activeLink === "published" ? "border-b-2 border-gray-800" : ""
+          }
+        >
+          <Link
+            to={`/user/${user?._id}/published`}
+            onClick={() => setActiveLink("published")}
+            className="hover:cursor-pointer"
+          >
+            Published
+          </Link>
         </li>
-        <li>
-          <Link to={`/user/${user?._id}/Unpublished`}>Unpublished</Link>
+        <li
+          className={
+            activeLink === "unpublished" ? "border-b-2 border-gray-800" : ""
+          }
+        >
+          <Link
+            to={`/user/${user?._id}/unpublished`}
+            onClick={() => setActiveLink("unpublished")}
+            className="hover:cursor-pointer"
+          >
+            Unpublished
+          </Link>
         </li>
       </ul>
       <Routes>
         <Route path="published" element={<PublishedPostPage />} />
         <Route path="unpublished" element={<UnPublishedPostPage />} />
         <Route
-          path={`published/${user?._id}`}
+          path="published/:postId"
           element={
             <UserPostDetail
               openCommentModal={openCommentModal}
@@ -78,7 +99,7 @@ export default function ProfilePage({
           }
         />
         <Route
-          path={`unpublished/${user?._id}`}
+          path="unpublished/:postId"
           element={
             <UserPostDetail
               openCommentModal={openCommentModal}

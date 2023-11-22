@@ -13,6 +13,7 @@ export default function UserPostDetail({
   const { postId } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [openUtilites, setOpenUtility] = useState<boolean>(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {

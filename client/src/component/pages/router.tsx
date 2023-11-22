@@ -72,7 +72,7 @@ export default function RouterPage({
               ),
             },
             {
-              path: "Unpublished/:postId",
+              path: "unpublished/:postId",
               element: (
                 <UserPostDetail
                   openCommentModal={openCommentModal}

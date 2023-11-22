@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import {
+  UserContext,
+  UserContextType,
   UserPostContext,
   UserPostContextType,
 } from "../../context/userContext";
@@ -7,7 +9,7 @@ import { Link } from "react-router-dom";
 import { formatUsername, formatDate, shortenWords } from "../../helper/format";
 export default function UnPublishedPostPage() {
   const { userPosts } = useContext<UserPostContextType>(UserPostContext);
-
+  const { user } = useContext<UserContextType>(UserContext);
   const unPublishedPosts = userPosts?.filter(
     (post) => post.isPublished === false,
   );
@@ -15,7 +17,10 @@ export default function UnPublishedPostPage() {
     <div className="post-container flex flex-col gap-5">
       {unPublishedPosts?.length ? (
         unPublishedPosts.map((post) => (
-          <Link to={`/user/unpublished/${post._id}`} key={post._id}>
+          <Link
+            to={`/user/${user?._id}/unpublished/${post._id}`}
+            key={post._id}
+          >
             <div className="flex justify-between">
               <div className="left-side-bar w-48 flex flex-col justify-between gap-2">
                 <p className="author-container text-xs font-bold text-gray-600">

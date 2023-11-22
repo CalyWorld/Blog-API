@@ -30,7 +30,7 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
     <div className="min-h-screen flex flex-col">
       {user?.username ? (
         <header>
-          <nav className="flex justify-between border-b border-black pb-3">
+          <nav className="flex justify-between border-b border-gray-400 pb-3">
             <a href="/">
               <h1>Infinite Insights</h1>
             </a>

@@ -2,13 +2,14 @@ import { CiBookmark } from "react-icons/ci";
 import { PiSignOutThin } from "react-icons/pi";
 import { useContext } from "react";
 import { UserContext, UserContextType } from "../../context/userContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 interface SetProfileModal {
   setProfileModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export default function ProfileModal({ setProfileModal }: SetProfileModal) {
   const { user, setUser } = useContext<UserContextType>(UserContext);
+  const navigate = useNavigate();
   async function logOut() {
     try {
       const response = await fetch(`http://localhost:3000/logout`, {
@@ -23,6 +24,7 @@ export default function ProfileModal({ setProfileModal }: SetProfileModal) {
         Cookies.remove("userInfo");
         setUser(emptyUser);
         setProfileModal(false);
+        navigate("/");
       } else {
         console.log("Logout failed");
       }
