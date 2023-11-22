@@ -89,7 +89,7 @@ exports.updateComment = [
         return null;
       }
       //this should go to the post where the comment is being made
-      res.redirect(`/comment/${updatedComment._id}`);
+      res.redirect(`/comments/${updatedComment._id}`);
       console.log(updatedComment);
     }
   }),
@@ -100,7 +100,5 @@ exports.deleteCommentById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     console.log({ selectedComment: req.params.id });
     await Comment.findByIdAndRemove(req.params.id);
-    //this should go to the post where the comment is being made
-    res.redirect("/post");
   },
 );

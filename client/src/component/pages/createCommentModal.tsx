@@ -5,9 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { UserContext, UserContextType } from "../../context/userContext";
 import { formatUsername } from "../../helper/format";
-import { PostContext, PostContextType } from "../../context/postContext";
+import { Post } from "../../context/postContext";
 interface CreateCommentModal {
   setCreateCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
+  post?: Post | null;
 }
 
 const textAreaSchema = z.object({
@@ -18,6 +19,7 @@ type commentContentSchemaType = z.infer<typeof textAreaSchema>;
 
 export default function CreateCommentModal({
   setCreateCommentModal,
+  post,
 }: CreateCommentModal) {
   const {
     register,
@@ -28,7 +30,6 @@ export default function CreateCommentModal({
   });
 
   const { user } = useContext<UserContextType>(UserContext);
-  const { post } = useContext<PostContextType>(PostContext);
 
   const onSubmit: SubmitHandler<commentContentSchemaType> = async (data) => {
     try {

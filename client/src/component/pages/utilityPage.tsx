@@ -1,7 +1,9 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import { Post } from "../../context/postContext";
-import { MdOutlinePublishedWithChanges } from "react-icons/md";
-import { MdOutlineUnpublished } from "react-icons/md";
+import {
+  MdOutlinePublishedWithChanges,
+  MdOutlineUnpublished,
+} from "react-icons/md";
 interface UtlityPageProp {
   post: Post;
 }

@@ -603,6 +603,10 @@ video {
   width: 50%;
 }
 
+.w-2\/5 {
+  width: 40%;
+}
+
 .w-3\/4 {
   width: 75%;
 }
@@ -617,10 +621,6 @@ video {
 
 .w-64 {
   width: 16rem;
-}
-
-.w-96 {
-  width: 24rem;
 }
 
 .w-full {
@@ -926,7 +926,7 @@ video {
 
 * {
   box-sizing: border-box;
-  /* border: 0.1px solid red; */
+  border: 0.1px solid red;
 }
 
 :root {

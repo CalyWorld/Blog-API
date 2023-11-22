@@ -15,7 +15,7 @@ export function CommentModal({ setCommentModal, post }: CommentModalType) {
   const { user } = useContext<UserContextType>(UserContext);
 
   return (
-    <div className="comment-modal flex flex-col gap-5 fixed right-0 top-0 w-96 h-screen rounded-md overflow-y-scroll">
+    <div className="comment-modal flex flex-col gap-5 fixed right-0 top-0 w-2/5 h-screen rounded-md overflow-y-scroll">
       <div className="flex justify-between p-2">
         <div className="flex gap-2">
           <h2 className="font-bold">Response</h2>
@@ -33,7 +33,10 @@ export function CommentModal({ setCommentModal, post }: CommentModalType) {
       <div className="transition-opacity duration-1000 ease-in-out">
         {user ? (
           createCommentModal ? (
-            <CreateCommentModal setCreateCommentModal={setCreateCommentModal} />
+            <CreateCommentModal
+              setCreateCommentModal={setCreateCommentModal}
+              post={post}
+            />
           ) : (
             <div
               className="make-post-container shadow-lg rounded-md cursor-pointer"
