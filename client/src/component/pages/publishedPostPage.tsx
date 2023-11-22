@@ -14,7 +14,7 @@ export default function PublishedPostPage() {
     <div className="post-container flex flex-col gap-20">
       {publishedPost?.length ? (
         publishedPost.map((post) => (
-          <Link to={`/@username/published/${post._id}`} key={post._id}>
+          <Link to={`/user/published/${post._id}`} key={post._id}>
             <div className="flex justify-between">
               <div className="left-side-bar w-48 flex flex-col justify-between gap-2">
                 <p className="author-container text-xs font-bold text-gray-600">

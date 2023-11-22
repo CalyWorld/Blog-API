@@ -15,7 +15,7 @@ export default function UnPublishedPostPage() {
     <div className="post-container flex flex-col gap-5">
       {unPublishedPosts?.length ? (
         unPublishedPosts.map((post) => (
-          <Link to={`/@username/unpublished/${post._id}`} key={post._id}>
+          <Link to={`/user/unpublished/${post._id}`} key={post._id}>
             <div className="flex justify-between">
               <div className="left-side-bar w-48 flex flex-col justify-between gap-2">
                 <p className="author-container text-xs font-bold text-gray-600">
@@ -45,7 +45,7 @@ export default function UnPublishedPostPage() {
         ))
       ) : (
         <div className="flex flex-col items-center">
-          <p>No Published Post</p>
+          <p>No UnPublished Post</p>
         </div>
       )}
     </div>

@@ -6,6 +6,7 @@ import ProfileModal from "../pages/profileModal";
 import Cookies from "js-cookie";
 import { UserContext, UserContextType } from "../../context/userContext";
 import { FaPenAlt } from "react-icons/fa";
+import FooterPage from "../footer/footer";
 export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
   const { user, setUser } = useContext<UserContextType>(UserContext);
   const [openProfileModal, setProfileModal] = useState<boolean>(false);
@@ -26,36 +27,38 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
   }
 
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       {user?.username ? (
-        <nav className="flex justify-between border-b border-black pb-3">
-          <a href="/">
-            <h1>Infinite Insights</h1>
-          </a>
-          <ul className="flex gap-8 items-center">
-            <Link to="/new-story">
-              <li className="flex items-center gap-2">
-                <FaPenAlt />
-                <div>
-                  <p>Write</p>
+        <header>
+          <nav className="flex justify-between border-b border-black pb-3">
+            <a href="/">
+              <h1>Infinite Insights</h1>
+            </a>
+            <ul className="flex gap-8 items-center">
+              <Link to="/new-story">
+                <li className="flex items-center gap-2">
+                  <FaPenAlt />
+                  <div>
+                    <p>Write</p>
+                  </div>
+                </li>
+              </Link>
+              <li>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setProfileModal(!openProfileModal);
+                  }}
+                >
+                  <FaRegUser size={24} />
                 </div>
+                {openProfileModal && (
+                  <ProfileModal setProfileModal={setProfileModal} />
+                )}
               </li>
-            </Link>
-            <li>
-              <div
-                className="cursor-pointer"
-                onClick={() => {
-                  setProfileModal(!openProfileModal);
-                }}
-              >
-                <FaRegUser size={24} />
-              </div>
-              {openProfileModal && (
-                <ProfileModal setProfileModal={setProfileModal} />
-              )}
-            </li>
-          </ul>
-        </nav>
+            </ul>
+          </nav>
+        </header>
       ) : (
         <nav className="flex justify-between border-b border-black pb-3">
           <a href="/">
@@ -77,12 +80,12 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
           </ul>
         </nav>
       )}
-
-      <section>
+      <section className="flex-1 mt-20">
         <div id="detail">
           <Outlet />
         </div>
       </section>
-    </>
+      <FooterPage />
+    </div>
   );
 }

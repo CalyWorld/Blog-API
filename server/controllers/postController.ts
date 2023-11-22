@@ -68,7 +68,6 @@ exports.createPost = [
       res.json(postDetail);
     } else {
       await postDetail.save();
-      res.redirect(`/posts/${postDetail._id}`);
     }
   }),
 ];
@@ -118,6 +117,5 @@ exports.deletePostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     console.log({ selectedUser: req.params.id });
     await Post.findByIdAndRemove(req.params.id);
-    res.redirect("/posts");
   },
 );

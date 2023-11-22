@@ -1,19 +1,10 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Nav from "./component/header/navPage";
-import PostPage from "./component/pages/PostPage.1";
 import { Posts, PostsContext } from "./context/postsContext";
 import { User, UserContext, UserPostContext } from "./context/userContext";
 import SignInForm from "./form/signInForm";
 import SignUpForm from "./form/signUpForm";
 import { useState, useMemo } from "react";
-import ErrorPage from "./component/pages/errorPage";
-import PostDetail from "./component/pages/postDetail";
 import { PostContext, Post } from "./context/postContext";
-import CreatePostPage from "./component/pages/createPostPage";
-import ProfilePage from "./component/pages/profilepage";
-import PublishedPostPage from "./component/pages/publishedPostPage";
-import UnPublishedPostPage from "./component/pages/unpublishedPostPage";
-import UserPostDetail from "./component/pages/userPostDetail";
+import RouterPage from "./component/pages/router";
 
 function App() {
   const [user, setUser] = useState<User | null>({});
@@ -33,63 +24,6 @@ function App() {
     [userPosts],
   );
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: (
-        <Nav setSignInForm={setSignInForm} setSignUpForm={setSignUpForm} />
-      ),
-      errorElement: <ErrorPage />,
-      children: [
-        {
-          path: "/",
-          element: <PostPage />,
-        },
-        {
-          path: "/new-story",
-          element: <CreatePostPage />,
-        },
-        {
-          path: "post/:postId",
-          element: (
-            <PostDetail
-              openCommentModal={openCommentModal}
-              setCommentModal={setCommentModal}
-            />
-          ),
-        },
-        {
-          path: `/@username/*`,
-          element: (
-            <ProfilePage
-              openCommentModal={openCommentModal}
-              setCommentModal={setCommentModal}
-            />
-          ),
-          children: [
-            {
-              path: "published",
-              element: <PublishedPostPage />,
-            },
-            {
-              path: "unpublished",
-              element: <UnPublishedPostPage />,
-            },
-            {
-              path: "published/:postId",
-              element: (
-                <UserPostDetail
-                  openCommentModal={openCommentModal}
-                  setCommentModal={setCommentModal}
-                />
-              ),
-            },
-          ],
-        },
-      ],
-    },
-  ]);
-
   return (
     <UserContext.Provider value={userContextValue}>
       <PostsContext.Provider value={postsContextValue}>
@@ -98,9 +32,14 @@ function App() {
             <div
               className={`app-container ${
                 openSignInForm || openSignUpForm ? "blur-sm" : ""
-              } flex flex-col gap-20 p-5`}
+              } flex flex-col gap-20 p-2`}
             >
-              <RouterProvider router={router} />
+              <RouterPage
+                openCommentModal={openCommentModal}
+                setCommentModal={setCommentModal}
+                setSignInForm={setSignInForm}
+                setSignUpForm={setSignUpForm}
+              />
             </div>
             {openSignInForm && (
               <SignInForm

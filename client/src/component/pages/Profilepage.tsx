@@ -59,17 +59,17 @@ export default function ProfilePage({
       </ul>
       <ul className="flex gap-5 border-b border-black">
         <li>
-          <Link to={`/@username/published`}>Published</Link>
+          <Link to={`/user/${user?._id}/published`}>Published</Link>
         </li>
         <li>
-          <Link to={`/@username/Unpublished`}>Unpublished</Link>
+          <Link to={`/user/${user?._id}/Unpublished`}>Unpublished</Link>
         </li>
       </ul>
       <Routes>
         <Route path="published" element={<PublishedPostPage />} />
         <Route path="unpublished" element={<UnPublishedPostPage />} />
         <Route
-          path="published/:postId"
+          path={`published/${user?._id}`}
           element={
             <UserPostDetail
               openCommentModal={openCommentModal}
@@ -78,7 +78,7 @@ export default function ProfilePage({
           }
         />
         <Route
-          path="unpublished/:postId"
+          path={`unpublished/${user?._id}`}
           element={
             <UserPostDetail
               openCommentModal={openCommentModal}

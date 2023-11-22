@@ -2,7 +2,7 @@ import { FaRegUser } from "react-icons/fa6";
 import { AiOutlineDelete } from "react-icons/ai";
 import { formatDate, formatUsername } from "../../helper/format";
 import { Post } from "../../context/postContext";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserContext, UserContextType } from "../../context/userContext";
 interface CommentPageType {
   post?: Post | null;
