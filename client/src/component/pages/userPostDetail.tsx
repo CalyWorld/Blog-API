@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { Post } from "../../context/postContext";
 import { BsThreeDots } from "react-icons/bs";
 import UtilityPage from "./utilityPage";
+import EditPostPage from "./editPostPage";
 export default function UserPostDetail({
   openCommentModal,
   setCommentModal,
@@ -13,6 +14,7 @@ export default function UserPostDetail({
   const { postId } = useParams();
   const [post, setPost] = useState<Post | null>(null);
   const [openUtilites, setOpenUtility] = useState<boolean>(false);
+  const [openEditForm, setEditForm] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,7 +47,9 @@ export default function UserPostDetail({
 
   return (
     <div className="flex items-center justify-center">
-      {post ? (
+      {openEditForm ? (
+        <EditPostPage post={post} setEditForm={setEditForm} />
+      ) : post ? (
         <div
           className="post-container w-3/4 mx-auto flex flex-col p-5"
           key={post?.post._id}
@@ -76,7 +80,9 @@ export default function UserPostDetail({
                   }}
                 >
                   <BsThreeDots size={18} />
-                  {openUtilites && <UtilityPage post={post} />}
+                  {openUtilites && (
+                    <UtilityPage post={post} setEditForm={setEditForm} />
+                  )}
                 </div>
               </div>
             </div>

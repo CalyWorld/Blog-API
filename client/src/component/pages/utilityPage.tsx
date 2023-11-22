@@ -1,4 +1,5 @@
 import { AiOutlineDelete } from "react-icons/ai";
+import { CiEdit } from "react-icons/ci";
 import { Post } from "../../context/postContext";
 import {
   MdOutlinePublishedWithChanges,
@@ -6,9 +7,10 @@ import {
 } from "react-icons/md";
 interface UtlityPageProp {
   post: Post;
+  setEditForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function UtilityPage({ post }: UtlityPageProp) {
+export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
   async function handleUpdatePostPublicationStatus(publicationStatus: string) {
     let isPublished;
     if (publicationStatus === "publish") {
@@ -72,9 +74,17 @@ export default function UtilityPage({ post }: UtlityPageProp) {
         }}
       >
         <AiOutlineDelete size={18} />
-        <p>Delete</p>
+        <p>Delete Post</p>
       </div>
-      <div>edit Post</div>
+      <div
+        className="flex items-center gap-2"
+        onClick={() => {
+          setEditForm(true);
+        }}
+      >
+        <CiEdit size={18} />
+        <p>Edit Post</p>
+      </div>
       <div
         className="flex items-center gap-2"
         onClick={() => {

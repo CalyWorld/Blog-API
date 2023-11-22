@@ -44,19 +44,7 @@ async function main() {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(
-  session({
-    secret: "cats",
-    resave: false,
-    saveUninitialized: true,
-    store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI,
-    }),
-    cookie: {
-      maxAge: 3600000, // 1 hour (adjust as needed)
-    },
-  }),
-);
+app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
