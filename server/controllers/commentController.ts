@@ -76,7 +76,6 @@ exports.updateComment = [
 //delete user comment
 exports.deleteCommentById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log({ selectedComment: req.params.id });
     await Comment.findByIdAndRemove(req.params.id);
   },
 );
