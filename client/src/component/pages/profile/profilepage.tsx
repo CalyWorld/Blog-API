@@ -40,7 +40,7 @@ export default function ProfilePage({
       }
     }
     getUserPost();
-  }, []);
+  }, [user?._id]);
 
   return (
     <nav className="flex flex-col gap-5">

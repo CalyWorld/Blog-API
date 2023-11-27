@@ -11,7 +11,7 @@ interface CommentPageType {
 }
 export default function CommentPage({ comments }: CommentPageType) {
   const { user } = useContext<UserContextType>(UserContext);
-  const [editCommentId, setEditComment] = useState<string>("");
+  const [editCommentId, setEditCommentModal] = useState<string>("");
 
   async function handleCommentDelete(id: string) {
     try {
@@ -39,7 +39,7 @@ export default function CommentPage({ comments }: CommentPageType) {
           editCommentId === comment._id ? (
             <div key={comment._id}>
               <EditCommentPage
-                setEditComment={setEditComment}
+                setEditCommentModal={setEditCommentModal}
                 comment={comment}
               />
             </div>
@@ -62,7 +62,7 @@ export default function CommentPage({ comments }: CommentPageType) {
                           </div>
                           <div
                             onClick={() => {
-                              setEditComment(comment._id);
+                              setEditCommentModal(comment._id);
                             }}
                           >
                             <CiEdit size={24} />

@@ -10,7 +10,7 @@ import { UserContext, UserContextType } from "../../../context/userContext";
 export default function PostPage() {
   const { posts, setPosts } = useContext<PostsContextType>(PostsContext);
   const { user } = useContext<UserContextType>(UserContext);
-
+  const API_BASE_URL = "http://localhost:3000";
   const otherUsersPublishedPosts = posts.filter(
     (post) => post.isPublished === true && post.author?._id !== user?._id,
   );
@@ -18,7 +18,7 @@ export default function PostPage() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const response = await fetch("http://localhost:3000/posts", {
+        const response = await fetch(`${API_BASE_URL}/posts`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

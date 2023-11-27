@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Nav from "../header/navPage";
 import ErrorPage from "./errorPage";
 import PostPage from "./post/postPage";
-import CreatePostPage from "./createPostPage";
+import CreatePostPage from "./post/createPostPage";
 import PostDetail from "./post/postDetail";
 import ProfilePage from "./profile/profilepage";
 import PublishedPostPage from "./profile/publishedPostPage";

@@ -2,7 +2,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useContext } from "react";
-import { UserContext, UserContextType } from "../../context/userContext";
+import { UserContext, UserContextType } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
 
 const postSchema = z.object({

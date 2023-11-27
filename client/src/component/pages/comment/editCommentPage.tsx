@@ -8,7 +8,7 @@ import { UserContext, UserContextType } from "../../../context/userContext";
 import { Comments } from "../../../context/commentContext";
 
 interface EditCommentPage {
-  setEditComment: React.Dispatch<React.SetStateAction<string>>;
+  setEditCommentModal: React.Dispatch<React.SetStateAction<string>>;
   comment: Comments;
 }
 
@@ -18,7 +18,7 @@ const textAreaSchema = z.object({
 
 type editCommentContentSchemaType = z.infer<typeof textAreaSchema>;
 export default function EditCommentPage({
-  setEditComment,
+  setEditCommentModal,
   comment,
 }: EditCommentPage) {
   const {
@@ -53,7 +53,7 @@ export default function EditCommentPage({
         },
         body: JSON.stringify(commentDetails),
       });
-      setEditComment("");
+      setEditCommentModal("");
     } catch (error) {
       console.log("Error occured during submitting comments", error);
     }
@@ -82,7 +82,7 @@ export default function EditCommentPage({
               <p
                 className="cursor-pointer"
                 onClick={() => {
-                  setEditComment("");
+                  setEditCommentModal("");
                 }}
               >
                 Cancel

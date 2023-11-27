@@ -1,4 +1,4 @@
-import { Post } from "../../../context/postContext";
+import { Posts } from "../../../context/postsContext";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../../../context/userContext";
 
 interface EditPostPage {
-  post: Post | null;
+  post: Posts | null;
   setEditForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const editPostSchema = z.object({
@@ -28,12 +28,12 @@ export default function EditPostPage({ post, setEditForm }: EditPostPage) {
   const { user } = useContext<UserContextType>(UserContext);
 
   const [editPost, setEditPost] = useState({
-    title: post?.post.title ?? "",
-    content: post?.post.content ?? "",
+    title: post?.title ?? "",
+    content: post?.content ?? "",
     author: user?._id,
     publishedDate: Date.now(),
-    isPublished: post?.post.isPublished ?? false,
-    imageUrl: post?.post.imageUrl ?? "",
+    isPublished: post?.isPublished ?? false,
+    imageUrl: post?.imageUrl ?? "",
   });
 
   function handleChange(

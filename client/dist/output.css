@@ -715,14 +715,6 @@ video {
   gap: 2rem;
 }
 
-.gap-y-20 {
-  row-gap: 5rem;
-}
-
-.gap-y-16 {
-  row-gap: 4rem;
-}
-
 .gap-y-14 {
   row-gap: 3.5rem;
 }
@@ -963,7 +955,6 @@ video {
 
 * {
   box-sizing: border-box;
-  border: 0.1px solid red;
 }
 
 :root {

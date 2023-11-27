@@ -6,7 +6,7 @@ import { FaRegCommentAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { Posts } from "../../../context/postsContext";
 import { BsThreeDots } from "react-icons/bs";
-import UtilityPage from "../utilityPage";
+import UtilityPage from "../../../helper/utilityPage";
 import EditPostPage from "../post/editPostPage";
 import { Comments } from "../../../context/commentContext";
 export default function UserPostDetail({

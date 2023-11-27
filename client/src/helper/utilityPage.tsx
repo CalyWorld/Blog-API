@@ -1,6 +1,6 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
-import { Posts } from "../../context/postsContext";
+import { Posts } from "../context/postsContext";
 import {
   MdOutlinePublishedWithChanges,
   MdOutlineUnpublished,
@@ -11,8 +11,11 @@ interface UtlityPageProp {
 }
 
 export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
+  const API_BASE_URL = "http://localhost:3000";
+
   async function handleUpdatePostPublicationStatus(publicationStatus: string) {
     let isPublished;
+
     if (publicationStatus === "publish") {
       isPublished = true;
     } else if (publicationStatus === "unPublish") {
@@ -30,16 +33,13 @@ export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
     };
 
     try {
-      const response = await fetch(
-        `http://localhost:3000/posts/${post._id}/update`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(postDetail),
+      const response = await fetch(`${API_BASE_URL}/posts/${post._id}/update`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
+        body: JSON.stringify(postDetail),
+      });
       if (response.ok) {
         console.log("post succesfully deleted");
       }

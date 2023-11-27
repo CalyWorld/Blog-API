@@ -29,6 +29,7 @@ export default function CreateCommentModal({
 
   const { user } = useContext<UserContextType>(UserContext);
   const { postId } = useParams();
+  const API_BASE_URL = "http://localhost:3000";
   console.log(postId);
 
   const onSubmit: SubmitHandler<commentContentSchemaType> = async (data) => {
@@ -39,7 +40,7 @@ export default function CreateCommentModal({
         post: postId,
         commentDate: Date.now(),
       };
-      await fetch("http://localhost:3000/comments/create", {
+      await fetch(`${API_BASE_URL}/comments/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
