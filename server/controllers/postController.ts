@@ -26,19 +26,15 @@ exports.getUserPost = asyncHandler(
 );
 
 //get specific post and comments
-exports.getPostAndCommentsById = asyncHandler(
+exports.getPostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const [post, comments] = await Promise.all([
-      Post.findById(req.params.id).populate("author").exec(),
-      Comment.find({ post: req.params.id }).populate("author").exec(),
-    ]);
+    const post = await Post.findById(req.params.id).populate("author").exec();
 
     if (!post) {
       console.log("No post found with the given ID");
       return res.status(404).json({ error: "No post found with the given ID" });
     }
-
-    res.json({ post, comments });
+    res.json(post);
   },
 );
 
@@ -54,13 +50,15 @@ exports.createPost = [
     .escape(),
   body("isPublished", "isPublished should be a boolean").isBoolean(),
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const { title, content, author, publishedDate, isPublished, imageUrl } =
+      req.body;
     const postDetail = new Post({
-      title: req.body.title,
-      content: req.body.content,
-      author: req.body.author,
-      publishedDate: req.body.publishedDate,
-      isPublished: req.body.isPublished,
-      imageUrl: req.body.imageUrl,
+      title: title,
+      content: content,
+      author: author,
+      publishedDate: publishedDate,
+      isPublished: isPublished,
+      imageUrl: imageUrl,
     });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -84,13 +82,15 @@ exports.updatePost = [
     .escape(),
   body("isPublished", "isPublished should be a boolean").isBoolean(),
   asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    const { title, content, author, publishedDate, isPublished, imageUrl } =
+      req.body;
     const postDetail = new Post({
-      title: req.body.title,
-      content: req.body.content,
-      author: req.body.author,
-      publishedDate: req.body.publishedDate,
-      isPublished: req.body.isPublished,
-      imageUrl: req.body.imageUrl,
+      title: title,
+      content: content,
+      author: author,
+      publishedDate: publishedDate,
+      isPublished: isPublished,
+      imageUrl: imageUrl,
       _id: req.params.id,
     });
     const errors = validationResult(req);
@@ -115,7 +115,6 @@ exports.updatePost = [
 //delete user post
 exports.deletePostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    console.log({ selectedUser: req.params.id });
     await Post.findByIdAndRemove(req.params.id);
   },
 );

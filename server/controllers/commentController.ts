@@ -14,14 +14,13 @@ exports.getAllComments = asyncHandler(
 //get user comment
 exports.getCommentById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const commentById = await Comment.findById(req.params.id)
-      .populate("post")
+    const comment = await Comment.find({ post: req.params.id })
       .populate("author")
       .exec();
-    if (commentById === null) {
+    if (comment === null) {
       console.log("no comment from post");
     }
-    res.json(commentById);
+    res.json(comment);
   },
 );
 

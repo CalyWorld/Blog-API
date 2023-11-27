@@ -30,24 +30,19 @@ export default function CreatePostPage() {
       const postDetails = {
         title: data.title,
         content: data.content,
-        author: user?._id,
+        author: user,
         publishedDate: Date.now(),
         isPublished: data.isPublished,
         imageUrl: data.imageUrl,
       };
-      const response = await fetch("http://localhost:3000/posts/create", {
+      await fetch("http://localhost:3000/posts/create", {
         method: "POST",
         body: JSON.stringify(postDetails),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      if (response.ok) {
-        console.log("post submitted succesfully");
-        navigate("/@username/published");
-      } else {
-        console.error("User data submission failed.");
-      }
+      navigate(`/@user/${user?._id}`);
     } catch (error) {
       console.log("submitted post succesfully", error);
     }
