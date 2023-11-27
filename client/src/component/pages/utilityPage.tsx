@@ -1,12 +1,12 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
-import { Post } from "../../context/postContext";
+import { Posts } from "../../context/postsContext";
 import {
   MdOutlinePublishedWithChanges,
   MdOutlineUnpublished,
 } from "react-icons/md";
 interface UtlityPageProp {
-  post: Post;
+  post: Posts;
   setEditForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -20,18 +20,18 @@ export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
     }
 
     const postDetail = {
-      title: post.post.title,
-      content: post.post.content,
-      author: post.post.author,
-      publishedDate: post.post.publishedDate,
+      title: post.title,
+      content: post.content,
+      author: post.author,
+      publishedDate: post.publishedDate,
       isPublished: isPublished,
-      imageUrl: post.post.imageUrl,
-      _id: post.post._id,
+      imageUrl: post.imageUrl,
+      _id: post._id,
     };
 
     try {
       const response = await fetch(
-        `http://localhost:3000/posts/${post.post._id}/update`,
+        `http://localhost:3000/posts/${post._id}/update`,
         {
           method: "PUT",
           headers: {
@@ -50,7 +50,7 @@ export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
   async function handleDeletePost() {
     try {
       const response = await fetch(
-        `http://localhost:3000/posts/${post.post._id}/delete`,
+        `http://localhost:3000/posts/${post._id}/delete`,
         {
           method: "DELETE",
           headers: {
@@ -89,16 +89,16 @@ export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
         className="flex items-center gap-2"
         onClick={() => {
           handleUpdatePostPublicationStatus(
-            post.post.isPublished ? "unPublish" : "publish",
+            post.isPublished ? "unPublish" : "publish",
           );
         }}
       >
-        {post.post.isPublished ? (
+        {post.isPublished ? (
           <MdOutlineUnpublished size={18} />
         ) : (
           <MdOutlinePublishedWithChanges size={18} />
         )}
-        <p>{post.post.isPublished ? "Unpublish Post" : "Publish Post"}</p>
+        <p>{post.isPublished ? "Unpublish Post" : "Publish Post"}</p>
       </div>
     </div>
   );

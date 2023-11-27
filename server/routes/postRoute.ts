@@ -9,7 +9,7 @@ router.post("/create", postController.createPost);
 //get user post
 router.get("/user/post/:id", postController.getUserPost);
 //get a specific post
-router.get("/:id", postController.getPostAndCommentsById);
+router.get("/:id", postController.getPostById);
 //edit a specific post
 router.put("/:id/update", postController.updatePost);
 //delete a post

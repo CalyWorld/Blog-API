@@ -1,7 +1,7 @@
 import { CiBookmark } from "react-icons/ci";
 import { PiSignOutThin } from "react-icons/pi";
 import { useContext } from "react";
-import { UserContext, UserContextType } from "../../context/userContext";
+import { UserContext, UserContextType } from "../../../context/userContext";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 interface SetProfileModal {

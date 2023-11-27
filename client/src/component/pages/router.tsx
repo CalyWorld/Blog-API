@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Nav from "../header/navPage";
 import ErrorPage from "./errorPage";
-import PostPage from "./postPage";
+import PostPage from "./post/postPage";
 import CreatePostPage from "./createPostPage";
-import PostDetail from "./postDetail";
-import ProfilePage from "./profilepage";
-import PublishedPostPage from "./publishedPostPage";
-import UnPublishedPostPage from "./unpublishedPostPage";
-import UserPostDetail from "./userPostDetail";
+import PostDetail from "./post/postDetail";
+import ProfilePage from "./profile/profilepage";
+import PublishedPostPage from "./profile/publishedPostPage";
+import UnPublishedPostPage from "./profile/unpublishedPostPage";
+import UserPostDetail from "./profile/userPostDetail";
 interface RouterPage {
   openCommentModal: boolean;
   setCommentModal: React.Dispatch<React.SetStateAction<boolean>>;

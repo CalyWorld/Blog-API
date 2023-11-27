@@ -14,19 +14,19 @@ export default function PostDetail({
   const { postId } = useParams();
   const [post, setPost] = useState<Posts | null>(null);
   const [comments, setComments] = useState<Comments[]>([]);
-  console.log(comments);
+  const API_BASE_URL = "http://localhost:3000";
 
   useEffect(() => {
     async function getPostAndComments() {
       try {
         const [postResponse, commentsResponse] = await Promise.all([
-          fetch(`http://localhost:3000/posts/${postId}`, {
+          fetch(`${API_BASE_URL}/posts/${postId}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
             },
           }),
-          fetch(`http://localhost:3000/comments/${postId}`, {
+          fetch(`${API_BASE_URL}/comments/${postId}`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",

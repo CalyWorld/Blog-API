@@ -4,16 +4,20 @@ import {
   UserContextType,
   UserPostContext,
   UserPostContextType,
-} from "../../context/userContext";
+} from "../../../context/userContext";
 import { Link } from "react-router-dom";
-import { formatUsername, formatDate, shortenWords } from "../../helper/format";
+import {
+  formatUsername,
+  formatDate,
+  shortenWords,
+} from "../../../helper/format";
 export default function PublishedPostPage() {
   const { userPosts } = useContext<UserPostContextType>(UserPostContext);
   const { user } = useContext<UserContextType>(UserContext);
   const publishedPost = userPosts?.filter((post) => post.isPublished === true);
 
   return (
-    <div className="post-container flex flex-col gap-20">
+    <div className="post-container flex flex-col gap-y-14">
       {publishedPost?.length ? (
         publishedPost.map((post) => (
           <Link to={`/user/${user?._id}/published/${post._id}`} key={post._id}>

@@ -53,7 +53,6 @@ export default function EditCommentPage({
         },
         body: JSON.stringify(commentDetails),
       });
-      console.log("submitted comments successfully");
       setEditComment("");
     } catch (error) {
       console.log("Error occured during submitting comments", error);

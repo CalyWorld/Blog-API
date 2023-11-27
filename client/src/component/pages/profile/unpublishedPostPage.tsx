@@ -1,44 +1,30 @@
-import { useContext, useEffect } from "react";
-import { PostsContextType, PostsContext } from "../../context/postsContext";
-import { formatDate, formatUsername, shortenWords } from "../../helper/format";
+import { useContext } from "react";
+import {
+  UserContext,
+  UserContextType,
+  UserPostContext,
+  UserPostContextType,
+} from "../../../context/userContext";
 import { Link } from "react-router-dom";
-import { UserContext, UserContextType } from "../../context/userContext";
-export default function PostPage() {
-  const { posts, setPosts } = useContext<PostsContextType>(PostsContext);
+import {
+  formatUsername,
+  formatDate,
+  shortenWords,
+} from "../../../helper/format";
+export default function UnPublishedPostPage() {
+  const { userPosts } = useContext<UserPostContextType>(UserPostContext);
   const { user } = useContext<UserContextType>(UserContext);
-
-  const otherUsersPublishedPosts = posts.filter(
-    (post) => post.isPublished === true && post.author?._id !== user?._id,
+  const unPublishedPosts = userPosts?.filter(
+    (post) => post.isPublished === false,
   );
-
-  useEffect(() => {
-    async function fetchPosts() {
-      try {
-        const response = await fetch("http://localhost:3000/posts", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (response.ok) {
-          const posts = await response.json();
-          setPosts(posts);
-        } else {
-          console.log("Failed to fetch posts");
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    }
-
-    fetchPosts();
-  }, []);
-
   return (
-    <div className="post-container flex flex-col gap-16">
-      {otherUsersPublishedPosts.length > 0 ? (
-        otherUsersPublishedPosts.map((post) => (
-          <Link to={`/post/${post._id}`} key={post._id}>
+    <div className="post-container flex flex-col gap-5">
+      {unPublishedPosts?.length ? (
+        unPublishedPosts.map((post) => (
+          <Link
+            to={`/user/${user?._id}/unpublished/${post._id}`}
+            key={post._id}
+          >
             <div className="flex justify-between">
               <div className="left-side-bar w-48 flex flex-col justify-between gap-2">
                 <p className="author-container text-xs font-bold text-gray-600">
@@ -68,7 +54,7 @@ export default function PostPage() {
         ))
       ) : (
         <div className="flex flex-col items-center">
-          <p>No Published Post</p>
+          <p>No UnPublished Post</p>
         </div>
       )}
     </div>
