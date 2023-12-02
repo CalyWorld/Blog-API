@@ -1,22 +1,37 @@
-import { useContext } from "react";
-import {
-  UserContext,
-  UserContextType,
-  UserPostContext,
-  UserPostContextType,
-} from "../../../context/userContext";
+import { useContext, useState, useEffect } from "react";
+import { UserContext, UserContextType } from "../../../context/userContext";
 import { Link } from "react-router-dom";
 import {
   formatUsername,
   formatDate,
   shortenWords,
 } from "../../../helper/format";
+import { Posts } from "../../../context/postsContext";
 export default function UnPublishedPostPage() {
-  const { userPosts } = useContext<UserPostContextType>(UserPostContext);
   const { user } = useContext<UserContextType>(UserContext);
-  const unPublishedPosts = userPosts?.filter(
-    (post) => post.isPublished === false,
-  );
+  const [unPublishedPosts, setUnPublishedPost] = useState<Posts[]>([]);
+  let isPublished: boolean = false;
+  const API_BASE_URL = "http://localhost:3000";
+
+  useEffect(() => {
+    async function getUserPostWithStatus() {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/posts/user/post/${user?._id}/${isPublished}`,
+          {
+            method: "GET",
+            credentials: "include",
+          },
+        );
+        const userPost = await response.json();
+        setUnPublishedPost(userPost.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUserPostWithStatus();
+  }, [user?._id]);
+
   return (
     <div className="post-container flex flex-col gap-5">
       {unPublishedPosts?.length ? (

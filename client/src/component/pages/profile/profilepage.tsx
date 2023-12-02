@@ -1,10 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import {
-  UserContext,
-  UserContextType,
-  UserPostContext,
-  UserPostContextType,
-} from "../../../context/userContext";
+import { useContext, useState } from "react";
+import { UserContext, UserContextType } from "../../../context/userContext";
 import { formatUsername } from "../../../helper/format";
 import { Link, Routes, Route } from "react-router-dom";
 import PublishedPostPage from "./publishedPostPage";
@@ -16,31 +11,7 @@ export default function ProfilePage({
   setCommentModal,
 }: CommentModalType) {
   const { user } = useContext<UserContextType>(UserContext);
-  const { setUserPost } = useContext<UserPostContextType>(UserPostContext);
   const [activeLink, setActiveLink] = useState<string>("");
-  const API_BASE_URL = "http://localhost:3000";
-
-  useEffect(() => {
-    async function getUserPost() {
-      try {
-        const response = await fetch(
-          `${API_BASE_URL}/posts/user/post/${user?._id}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-          },
-        );
-        const userPost = await response.json();
-        setUserPost(userPost.data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getUserPost();
-  }, [user?._id]);
 
   return (
     <nav className="flex flex-col gap-5">
@@ -87,6 +58,7 @@ export default function ProfilePage({
             <UserPostDetail
               openCommentModal={openCommentModal}
               setCommentModal={setCommentModal}
+              setActiveLink={setActiveLink}
             />
           }
         />
@@ -96,6 +68,7 @@ export default function ProfilePage({
             <UserPostDetail
               openCommentModal={openCommentModal}
               setCommentModal={setCommentModal}
+              setActiveLink={setActiveLink}
             />
           }
         />

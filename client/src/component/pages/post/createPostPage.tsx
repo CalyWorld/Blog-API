@@ -42,7 +42,11 @@ export default function CreatePostPage() {
           "Content-Type": "application/json",
         },
       });
-      navigate(`/user/${user?._id}`);
+      navigate(
+        `/user/${user?._id}/${
+          postDetails.isPublished ? "published" : "unpublished"
+        }`,
+      );
     } catch (error) {
       console.log("submitted post succesfully", error);
     }

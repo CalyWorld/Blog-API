@@ -6,8 +6,8 @@ const postController = require("../controllers/postController");
 router.get("/", postController.getAllPosts);
 //create a post
 router.post("/create", postController.createPost);
-//get user post
-router.get("/user/post/:id", postController.getUserPost);
+//get user post with status
+router.get("/user/post/:id/:status", postController.getUserPostWithStatus);
 //get a specific post
 router.get("/:id", postController.getPostById);
 //edit a specific post

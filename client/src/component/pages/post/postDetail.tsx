@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { CommentModal } from "../comment/commentModal";
 import { CommentModalType } from "../../../interface/commentModalProps";
 import { Posts } from "../../../context/postsContext";
-import { Comments } from "../../../context/commentContext";
+import { Comments } from "../../../interface/commentsProps";
 
 export default function PostDetail({
   openCommentModal,
@@ -76,7 +76,7 @@ export default function PostDetail({
               <img src={post.imageUrl} className="h-full" alt="image-post" />
             )}
           </div>
-          <div>{post?.content}</div>
+          <div className="mt-5">{post?.content}</div>
           <div className="border-t border-b border-gray-300">
             <div
               className="comment-icon-container cursor-pointer"

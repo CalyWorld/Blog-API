@@ -1,5 +1,4 @@
 import { createContext } from "react";
-import { Posts } from "./postsContext";
 export interface User {
   username?: string;
   password?: string;
@@ -14,14 +13,4 @@ export interface UserContextType {
 export const UserContext = createContext<UserContextType>({
   user: null,
   setUser: () => {},
-});
-
-export interface UserPostContextType {
-  userPosts: Posts[];
-  setUserPost: React.Dispatch<React.SetStateAction<Posts[]>>;
-}
-
-export const UserPostContext = createContext<UserPostContextType>({
-  userPosts: [],
-  setUserPost: () => {},
 });

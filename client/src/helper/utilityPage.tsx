@@ -11,9 +11,14 @@ import { UserContext, UserContextType } from "../context/userContext";
 interface UtlityPageProp {
   post: Posts;
   setEditForm: React.Dispatch<React.SetStateAction<boolean>>;
+  setActiveLink?: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
+export default function UtilityPage({
+  post,
+  setEditForm,
+  setActiveLink,
+}: UtlityPageProp) {
   const API_BASE_URL = "http://localhost:3000";
   const navigate = useNavigate();
   const { user } = useContext<UserContextType>(UserContext);
@@ -21,9 +26,9 @@ export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
   async function handleUpdatePostPublicationStatus(publicationStatus: string) {
     let isPublished;
 
-    if (publicationStatus === "publish") {
+    if (publicationStatus === "published") {
       isPublished = true;
-    } else if (publicationStatus === "unPublish") {
+    } else if (publicationStatus === "unpublished") {
       isPublished = false;
     }
 
@@ -45,11 +50,16 @@ export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
         },
         body: JSON.stringify(postDetail),
       });
-      navigate(`/user/${user?._id}`);
+      console.log(publicationStatus);
+      if (setActiveLink) {
+        setActiveLink(publicationStatus);
+      }
+      navigate(`/user/${user?._id}/${publicationStatus}`);
     } catch (error) {
       console.log(`Error while trying to ${publicationStatus}`, error);
     }
   }
+
   async function handleDeletePost() {
     try {
       await fetch(`http://localhost:3000/posts/${post._id}/delete`, {
@@ -87,7 +97,7 @@ export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
         className="flex items-center gap-2"
         onClick={() => {
           handleUpdatePostPublicationStatus(
-            post.isPublished ? "unPublish" : "publish",
+            post.isPublished ? "unpublished" : "published",
           );
         }}
       >

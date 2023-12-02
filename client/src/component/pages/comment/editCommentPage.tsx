@@ -5,7 +5,7 @@ import * as z from "zod";
 import { formatUsername } from "../../../helper/format";
 import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../../../context/userContext";
-import { Comments } from "../../../context/commentContext";
+import { Comments } from "../../../interface/commentsProps";
 
 interface EditCommentPage {
   setEditCommentModal: React.Dispatch<React.SetStateAction<string>>;
@@ -37,8 +37,8 @@ export default function EditCommentPage({
 
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setEdit({ ...commentEdit, [e.target.name]: e.target.value });
-    console.log(commentEdit);
   }
+
   const onSubmit: SubmitHandler<editCommentContentSchemaType> = async (
     data,
   ) => {

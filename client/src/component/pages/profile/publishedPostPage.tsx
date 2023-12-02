@@ -1,20 +1,36 @@
-import { useContext } from "react";
-import {
-  UserContext,
-  UserContextType,
-  UserPostContext,
-  UserPostContextType,
-} from "../../../context/userContext";
+import { useContext, useEffect, useState } from "react";
+import { UserContext, UserContextType } from "../../../context/userContext";
 import { Link } from "react-router-dom";
 import {
   formatUsername,
   formatDate,
   shortenWords,
 } from "../../../helper/format";
+import { Posts } from "../../../context/postsContext";
 export default function PublishedPostPage() {
-  const { userPosts } = useContext<UserPostContextType>(UserPostContext);
   const { user } = useContext<UserContextType>(UserContext);
-  const publishedPost = userPosts?.filter((post) => post.isPublished === true);
+  const [publishedPost, setPublishedPost] = useState<Posts[]>([]);
+  let isPublished: boolean = true;
+  const API_BASE_URL = "http://localhost:3000";
+
+  useEffect(() => {
+    async function getUserPostWithStatus() {
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/posts/user/post/${user?._id}/${isPublished}`,
+          {
+            method: "GET",
+            credentials: "include",
+          },
+        );
+        const userPost = await response.json();
+        setPublishedPost(userPost.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    getUserPostWithStatus();
+  }, [user?._id]);
 
   return (
     <div className="post-container flex flex-col gap-y-14">

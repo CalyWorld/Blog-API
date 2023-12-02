@@ -8,10 +8,11 @@ import { Posts } from "../../../context/postsContext";
 import { BsThreeDots } from "react-icons/bs";
 import UtilityPage from "../../../helper/utilityPage";
 import EditPostPage from "../post/editPostPage";
-import { Comments } from "../../../context/commentContext";
+import { Comments } from "../../../interface/commentsProps";
 export default function UserPostDetail({
   openCommentModal,
   setCommentModal,
+  setActiveLink,
 }: CommentModalType) {
   const { postId } = useParams();
   const [post, setPost] = useState<Posts | null>(null);
@@ -81,7 +82,11 @@ export default function UserPostDetail({
                 >
                   <BsThreeDots size={18} />
                   {openUtilites && (
-                    <UtilityPage post={post} setEditForm={setEditForm} />
+                    <UtilityPage
+                      post={post}
+                      setEditForm={setEditForm}
+                      setActiveLink={setActiveLink}
+                    />
                   )}
                 </div>
               </div>
@@ -92,7 +97,7 @@ export default function UserPostDetail({
               <img src={post.imageUrl} className="h-full" alt="image-post" />
             )}
           </div>
-          <div>{post.content}</div>
+          <div className="mt-5">{post.content}</div>
           <div className="border-t border-b border-gray-300">
             <div
               className="comment-icon-container cursor-pointer"

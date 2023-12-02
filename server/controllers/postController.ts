@@ -12,10 +12,13 @@ exports.getAllPosts = asyncHandler(
   },
 );
 
-//get user post
-exports.getUserPost = asyncHandler(
+//get user post with status
+exports.getUserPostWithStatus = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const postById = await Post.find({ author: req.params.id })
+    const postById = await Post.find({
+      author: req.params.id,
+      isPublished: req.params.status,
+    })
       .populate("author")
       .exec();
     if (postById === null) {
@@ -24,7 +27,6 @@ exports.getUserPost = asyncHandler(
     new SuccessResponse("user post gotten successfully", postById).send(res);
   },
 );
-
 //get specific post and comments
 exports.getPostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {

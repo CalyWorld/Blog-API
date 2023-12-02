@@ -5,7 +5,7 @@ import { formatDate, formatUsername } from "../../../helper/format";
 import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../../../context/userContext";
 import EditCommentPage from "./editCommentPage";
-import { Comments } from "../../../context/commentContext";
+import { Comments } from "../../../interface/commentsProps";
 interface CommentPageType {
   comments?: Comments[];
 }
