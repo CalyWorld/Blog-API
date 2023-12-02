@@ -30,7 +30,6 @@ export default function CreateCommentModal({
   const { user } = useContext<UserContextType>(UserContext);
   const { postId } = useParams();
   const API_BASE_URL = "http://localhost:3000";
-  console.log(postId);
 
   const onSubmit: SubmitHandler<commentContentSchemaType> = async (data) => {
     try {

@@ -12,21 +12,13 @@ interface CommentPageType {
 export default function CommentPage({ comments }: CommentPageType) {
   const { user } = useContext<UserContextType>(UserContext);
   const [editCommentId, setEditCommentModal] = useState<string>("");
+  const API_BASE_URL = "http://localhost:3000";
 
   async function handleCommentDelete(id: string) {
     try {
-      const response = await fetch(
-        `http://localhost:3000/comments/${id}/delete`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
-      if (response.ok) {
-        console.log("comment deleted succesfully");
-      }
+      await fetch(`${API_BASE_URL}/comments/${id}/delete`, {
+        method: "DELETE",
+      });
     } catch (error) {
       console.log(error);
     }

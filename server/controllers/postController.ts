@@ -40,7 +40,6 @@ exports.getPostById = asyncHandler(
     new SuccessResponse("specific blog post gotten succesfully", postById).send(
       res,
     );
-    // res.json(post);
   },
 );
 

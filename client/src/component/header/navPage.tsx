@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import NavProps from "../../interface/navProps";
+import NavProps from "../../interface/AuthProps";
 import { Outlet, Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa6";
 import ProfileModal from "../pages/profile/profileModal";

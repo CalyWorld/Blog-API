@@ -1,4 +1,4 @@
-import NavProps from "../interface/navProps";
+import AuthProps from "../interface/AuthProps";
 import openSignUpModal from "../helper/openSignUpModal";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +22,7 @@ const formSchema = z.object({
 
 type signInSchemaType = z.infer<typeof formSchema>;
 
-function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
+function SignInForm({ setSignInForm, setSignUpForm }: AuthProps) {
   const {
     register,
     handleSubmit,
@@ -33,12 +33,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
 
   const { setUser } = useContext<UserContextType>(UserContext);
 
-  if (!setSignInForm) {
-    return null;
-  }
-
   const onSubmit: SubmitHandler<signInSchemaType> = async (data) => {
-    setSignInForm(false);
     try {
       const user = { username: data.username, password: data.password };
       const response = await fetch("http://localhost:3000/signin", {
@@ -67,6 +62,7 @@ function SignInForm({ setSignInForm, setSignUpForm }: NavProps) {
           password: user?.password,
           _id: user?._id,
         });
+        setSignInForm(false);
       } else {
         const errorData = await response.json();
         console.log(errorData.message);

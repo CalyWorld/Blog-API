@@ -17,6 +17,7 @@ const textAreaSchema = z.object({
 });
 
 type editCommentContentSchemaType = z.infer<typeof textAreaSchema>;
+
 export default function EditCommentPage({
   setEditCommentModal,
   comment,
@@ -32,6 +33,8 @@ export default function EditCommentPage({
   const [commentEdit, setEdit] = useState({
     content: comment.content ?? "",
   });
+  const API_BASE_URL = "http://localhost:3000";
+
   function handleChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
     setEdit({ ...commentEdit, [e.target.name]: e.target.value });
     console.log(commentEdit);
@@ -46,7 +49,7 @@ export default function EditCommentPage({
         post: comment._id,
         commentDate: Date.now(),
       };
-      await fetch(`http://localhost:3000/comments/${comment._id}/update`, {
+      await fetch(`${API_BASE_URL}/comments/${comment._id}/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

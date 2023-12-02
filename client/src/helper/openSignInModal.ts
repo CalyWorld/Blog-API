@@ -1,4 +1,4 @@
-import NavProps from "../interface/navProps";
+import NavProps from "../interface/AuthProps";
 
 export default function openSignInModal({
   setSignInForm,

@@ -1,4 +1,4 @@
-import NavProps from "../interface/navProps";
+import AuthProps from "../interface/AuthProps";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import openSignInModal from "../helper/openSignInModal";
@@ -26,11 +26,7 @@ const formSchema = z
 
 type signUpSchemaType = z.infer<typeof formSchema>;
 
-function SignUpForm({ setSignInForm, setSignUpForm }: NavProps) {
-  if (!setSignUpForm) {
-    return null;
-  }
-
+function SignUpForm({ setSignInForm, setSignUpForm }: AuthProps) {
   const {
     register,
     handleSubmit,
