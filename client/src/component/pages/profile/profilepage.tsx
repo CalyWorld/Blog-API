@@ -17,7 +17,7 @@ export default function ProfilePage({
 }: CommentModalType) {
   const { user } = useContext<UserContextType>(UserContext);
   const { setUserPost } = useContext<UserPostContextType>(UserPostContext);
-  const [activeLink, setActiveLink] = useState("published");
+  const [activeLink, setActiveLink] = useState<string>("");
   const API_BASE_URL = "http://localhost:3000";
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function ProfilePage({
           },
         );
         const userPost = await response.json();
-        setUserPost(userPost);
+        setUserPost(userPost.data);
       } catch (err) {
         console.log(err);
       }
@@ -45,8 +45,9 @@ export default function ProfilePage({
   return (
     <nav className="flex flex-col gap-5">
       <ul className="header-container">
-        <li>
-          <h1>{formatUsername(user?.username)}</h1>
+        <li className="flex gap-3 items-center">
+          <h1>Welcome</h1>
+          <p className="font-medium">{formatUsername(user?.username)}</p>
         </li>
       </ul>
       <ul className="flex gap-5 border-b border-gray-400">

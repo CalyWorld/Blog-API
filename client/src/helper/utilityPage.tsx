@@ -1,10 +1,13 @@
 import { AiOutlineDelete } from "react-icons/ai";
 import { CiEdit } from "react-icons/ci";
 import { Posts } from "../context/postsContext";
+import { useNavigate } from "react-router-dom";
 import {
   MdOutlinePublishedWithChanges,
   MdOutlineUnpublished,
 } from "react-icons/md";
+import { useContext } from "react";
+import { UserContext, UserContextType } from "../context/userContext";
 interface UtlityPageProp {
   post: Posts;
   setEditForm: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +15,8 @@ interface UtlityPageProp {
 
 export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
   const API_BASE_URL = "http://localhost:3000";
+  const navigate = useNavigate();
+  const { user } = useContext<UserContextType>(UserContext);
 
   async function handleUpdatePostPublicationStatus(publicationStatus: string) {
     let isPublished;
@@ -33,34 +38,27 @@ export default function UtilityPage({ post, setEditForm }: UtlityPageProp) {
     };
 
     try {
-      const response = await fetch(`${API_BASE_URL}/posts/${post._id}/update`, {
+      await fetch(`${API_BASE_URL}/posts/${post._id}/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(postDetail),
       });
-      if (response.ok) {
-        console.log("post succesfully deleted");
-      }
+      navigate(`/user/${user?._id}`);
     } catch (error) {
       console.log(`Error while trying to ${publicationStatus}`, error);
     }
   }
   async function handleDeletePost() {
     try {
-      const response = await fetch(
-        `http://localhost:3000/posts/${post._id}/delete`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      await fetch(`http://localhost:3000/posts/${post._id}/delete`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
         },
-      );
-      if (response.ok) {
-        console.log("post publish status succesfully changed");
-      }
+      });
+      navigate(`/user/${user?._id}`);
     } catch (error) {
       console.log("Handle delete error", error);
     }

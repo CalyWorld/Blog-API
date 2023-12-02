@@ -20,13 +20,10 @@ export default function PostPage() {
       try {
         const response = await fetch(`${API_BASE_URL}/posts`, {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
         });
         if (response.ok) {
           const posts = await response.json();
-          setPosts(posts);
+          setPosts(posts.data);
         } else {
           console.log("Failed to fetch posts");
         }

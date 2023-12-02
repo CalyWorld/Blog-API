@@ -26,23 +26,17 @@ export default function UserPostDetail({
         const [postResponse, commentsResponse] = await Promise.all([
           fetch(`${API_BASE_URL}/posts/${postId}`, {
             method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
           }),
           fetch(`${API_BASE_URL}/comments/${postId}`, {
             method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
           }),
         ]);
 
         const postData = await postResponse.json();
         const commentsData = await commentsResponse.json();
 
-        setPost(postData);
-        setComments(commentsData);
+        setPost(postData.data);
+        setComments(commentsData.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }

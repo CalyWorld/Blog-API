@@ -7,7 +7,6 @@ const { body, validationResult } = require("express-validator");
 exports.getAllComments = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const allComments = await Comment.find().exec();
-    res.json(allComments);
     new SuccessResponse("Blog created successfully", allComments).send(res);
   },
 );
@@ -21,7 +20,6 @@ exports.getCommentById = asyncHandler(
     if (commentById === null) {
       console.log("no comment from post");
     }
-    res.json(commentById);
     new SuccessResponse("Blog created successfully", commentById).send(res);
   },
 );
@@ -44,8 +42,8 @@ exports.createComment = [
       errors.array();
       res.json(commentDetail);
     } else {
-      const newComment = await commentDetail.save();
-      new SuccessResponse("Blog created successfully", newComment).send(res);
+      await commentDetail.save();
+      new SuccessMsgResponse("comment created successfully").send(res);
     }
   }),
 ];
@@ -74,9 +72,7 @@ exports.updateComment = [
         commentDetail,
         {},
       );
-      new SuccessResponse("Blog created successfully", updatedComment).send(
-        res,
-      );
+      new SuccessMsgResponse("comment updated successfully").send(res);
     }
   }),
 ];
@@ -84,9 +80,7 @@ exports.updateComment = [
 //delete user comment
 exports.deleteCommentById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const deleteCommentById = await Comment.findByIdAndRemove(req.params.id);
-    new SuccessResponse("Blog created successfully", deleteCommentById).send(
-      res,
-    );
+    await Comment.findByIdAndRemove(req.params.id);
+    new SuccessMsgResponse("comment deleted successfully").send(res);
   },
 );

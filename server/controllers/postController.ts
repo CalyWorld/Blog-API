@@ -8,7 +8,6 @@ const { body, validationResult } = require("express-validator");
 exports.getAllPosts = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const allPosts = await Post.find().populate("author").exec();
-    res.json(allPosts);
     new SuccessResponse("Blog created successfully", allPosts).send(res);
   },
 );
@@ -20,24 +19,28 @@ exports.getUserPost = asyncHandler(
       .populate("author")
       .exec();
     if (postById === null) {
-      console.log("no post by author");
+      return new SuccessMsgResponse("no post by user").send(res);
     }
-    res.json(postById);
-    new SuccessResponse("Blog created successfully", postById).send(res);
+    new SuccessResponse("user post gotten successfully", postById).send(res);
   },
 );
 
 //get specific post and comments
 exports.getPostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const post = await Post.findById(req.params.id).populate("author").exec();
+    const postById = await Post.findById(req.params.id)
+      .populate("author")
+      .exec();
 
-    if (!post) {
-      console.log("No post found with the given ID");
-      return res.status(404).json({ error: "No post found with the given ID" });
+    if (!postById) {
+      return new SuccessMsgResponse(
+        "specific post not gotten succesfully",
+      ).send(res);
     }
-    res.json(post);
-    new SuccessResponse("Blog created successfully", post).send(res);
+    new SuccessResponse("specific blog post gotten succesfully", postById).send(
+      res,
+    );
+    // res.json(post);
   },
 );
 
@@ -110,8 +113,7 @@ exports.updatePost = [
       if (!updatedPost) {
         return null;
       }
-      new SuccessResponse("Blog created successfully", updatedPost).send(res);
-      console.log(updatedPost);
+      return new SuccessMsgResponse("Blog updated successfully").send(res);
     }
   }),
 ];
@@ -119,7 +121,7 @@ exports.updatePost = [
 //delete user post
 exports.deletePostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const deletePostById = await Post.findByIdAndRemove(req.params.id);
-    new SuccessResponse("Blog created successfully", deletePostById).send(res);
+    await Post.findByIdAndRemove(req.params.id);
+    return new SuccessMsgResponse("Blog deleted successfully").send(res);
   },
 );
