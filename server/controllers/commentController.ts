@@ -1,26 +1,28 @@
 import { Request, Response, NextFunction } from "express";
 import Comment from "../models/comment";
 const asyncHandler = require("express-async-handler");
+import { SuccessMsgResponse, SuccessResponse } from "../apiResponse";
 const { body, validationResult } = require("express-validator");
 
 exports.getAllComments = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const allComments = await Comment.find().exec();
-    console.log({ comments: allComments });
     res.json(allComments);
+    new SuccessResponse("Blog created successfully", allComments).send(res);
   },
 );
 
 //get user comment
 exports.getCommentById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    const comment = await Comment.find({ post: req.params.id })
+    const commentById = await Comment.find({ post: req.params.id })
       .populate("author")
       .exec();
-    if (comment === null) {
+    if (commentById === null) {
       console.log("no comment from post");
     }
-    res.json(comment);
+    res.json(commentById);
+    new SuccessResponse("Blog created successfully", commentById).send(res);
   },
 );
 
@@ -43,7 +45,7 @@ exports.createComment = [
       res.json(commentDetail);
     } else {
       const newComment = await commentDetail.save();
-      res.redirect(`/comments/${newComment._id}`);
+      new SuccessResponse("Blog created successfully", newComment).send(res);
     }
   }),
 ];
@@ -67,7 +69,14 @@ exports.updateComment = [
       errors.array();
       res.json(commentDetail);
     } else {
-      await Comment.findByIdAndUpdate(req.params.id, commentDetail, {});
+      const updatedComment = await Comment.findByIdAndUpdate(
+        req.params.id,
+        commentDetail,
+        {},
+      );
+      new SuccessResponse("Blog created successfully", updatedComment).send(
+        res,
+      );
     }
   }),
 ];
@@ -75,6 +84,9 @@ exports.updateComment = [
 //delete user comment
 exports.deleteCommentById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    await Comment.findByIdAndRemove(req.params.id);
+    const deleteCommentById = await Comment.findByIdAndRemove(req.params.id);
+    new SuccessResponse("Blog created successfully", deleteCommentById).send(
+      res,
+    );
   },
 );

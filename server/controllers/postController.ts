@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import Post from "../models/post";
-import Comment from "../models/comment";
+import { SuccessMsgResponse, SuccessResponse } from "../apiResponse";
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -9,6 +9,7 @@ exports.getAllPosts = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const allPosts = await Post.find().populate("author").exec();
     res.json(allPosts);
+    new SuccessResponse("Blog created successfully", allPosts).send(res);
   },
 );
 
@@ -22,6 +23,7 @@ exports.getUserPost = asyncHandler(
       console.log("no post by author");
     }
     res.json(postById);
+    new SuccessResponse("Blog created successfully", postById).send(res);
   },
 );
 
@@ -35,6 +37,7 @@ exports.getPostById = asyncHandler(
       return res.status(404).json({ error: "No post found with the given ID" });
     }
     res.json(post);
+    new SuccessResponse("Blog created successfully", post).send(res);
   },
 );
 
@@ -66,6 +69,7 @@ exports.createPost = [
       res.json(postDetail);
     } else {
       await postDetail.save();
+      new SuccessResponse("Blog created successfully", postDetail).send(res);
     }
   }),
 ];
@@ -106,7 +110,7 @@ exports.updatePost = [
       if (!updatedPost) {
         return null;
       }
-      res.redirect(`/posts/${updatedPost._id}`);
+      new SuccessResponse("Blog created successfully", updatedPost).send(res);
       console.log(updatedPost);
     }
   }),
@@ -115,6 +119,7 @@ exports.updatePost = [
 //delete user post
 exports.deletePostById = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
-    await Post.findByIdAndRemove(req.params.id);
+    const deletePostById = await Post.findByIdAndRemove(req.params.id);
+    new SuccessResponse("Blog created successfully", deletePostById).send(res);
   },
 );

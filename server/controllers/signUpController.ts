@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 import User from "../models/user";
 const bcrypt = require("bcryptjs");
