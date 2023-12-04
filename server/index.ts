@@ -9,7 +9,6 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import logger from "morgan";
 import mongoose from "mongoose";
-import MongoStore from "connect-mongo";
 import User from "./models/user";
 const userRouter = require("./routes/userRoute");
 const postRouter = require("./routes/postRoute");
