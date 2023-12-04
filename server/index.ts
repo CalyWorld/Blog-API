@@ -2,7 +2,6 @@ import express, { Application } from "express";
 import dotenv from "dotenv";
 const cors = require("cors");
 import bcrypt from "bcryptjs";
-import path from "path";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import passport from "passport";
