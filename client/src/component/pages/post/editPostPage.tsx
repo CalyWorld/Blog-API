@@ -32,17 +32,22 @@ export default function EditPostPage({ post, setEditForm }: EditPostPage) {
     content: post?.content ?? "",
     author: user?._id,
     publishedDate: Date.now(),
-    isPublished: post?.isPublished ?? false,
+    isPublished: post?.isPublished,
     imageUrl: post?.imageUrl ?? "",
   });
 
   function handleChange(
-    e:
-      | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) {
-    setEditPost({ ...editPost, [e.target.name]: e.target.value });
-    console.log(editPost);
+    const target = e.target as HTMLInputElement | HTMLTextAreaElement;
+
+    setEditPost((prevEditPost) => ({
+      ...prevEditPost,
+      [target.name]:
+        target.type === "checkbox"
+          ? (target as HTMLInputElement).checked
+          : target.value,
+    }));
   }
 
   const onSubmit: SubmitHandler<editPostSchemaType> = async (data) => {
@@ -74,10 +79,10 @@ export default function EditPostPage({ post, setEditForm }: EditPostPage) {
         }}
       ></textarea>
       <input
-        placeholder="Enter Image Url, Not Compulsory Though"
+        placeholder="http://www.imageUrl.com"
         className="p-3 text-xl"
         style={{ background: "rgb(235,231,231)" }}
-        id="image-url"
+        id="imageUrl"
         {...register("imageUrl")}
         value={editPost.imageUrl}
         onChange={(e) => {
@@ -90,7 +95,7 @@ export default function EditPostPage({ post, setEditForm }: EditPostPage) {
           id="isPublished"
           className="bg-white"
           {...register("isPublished")}
-          //   checked={editPost.isPublished}
+          checked={editPost.isPublished}
           onChange={(e) => {
             handleChange(e);
           }}
