@@ -81,7 +81,6 @@ passport.deserializeUser(async (id, done) => {
 
 app.use(logger("dev"));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", userRouter);
 app.use("/signin", signInRouter);
