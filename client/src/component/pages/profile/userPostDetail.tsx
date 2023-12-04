@@ -22,7 +22,7 @@ export default function UserPostDetail({
   const API_BASE_URL = "http://localhost:3000";
 
   useEffect(() => {
-    async function getPostAndComments() {
+    async function getPostWithComments() {
       try {
         const [postResponse, commentsResponse] = await Promise.all([
           fetch(`${API_BASE_URL}/posts/${postId}`, {
@@ -43,13 +43,17 @@ export default function UserPostDetail({
       }
     }
 
-    getPostAndComments();
+    getPostWithComments();
   }, [postId]);
 
   return (
     <div className="flex items-center justify-center">
       {openEditForm ? (
-        <EditPostPage post={post} setEditForm={setEditForm} />
+        <EditPostPage
+          post={post}
+          setEditForm={setEditForm}
+          setActiveLink={setActiveLink}
+        />
       ) : post ? (
         <div
           className="post-container w-3/4 mx-auto flex flex-col p-5"

@@ -4,10 +4,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../../../context/userContext";
+import { useNavigate } from "react-router-dom";
 
 interface EditPostPage {
   post: Posts | null;
   setEditForm: React.Dispatch<React.SetStateAction<boolean>>;
+  setActiveLink?: React.Dispatch<React.SetStateAction<string>>;
 }
 const editPostSchema = z.object({
   title: z.string().min(4, { message: "Title is required" }),
@@ -17,7 +19,11 @@ const editPostSchema = z.object({
 });
 type editPostSchemaType = z.infer<typeof editPostSchema>;
 
-export default function EditPostPage({ post, setEditForm }: EditPostPage) {
+export default function EditPostPage({
+  post,
+  setEditForm,
+  setActiveLink,
+}: EditPostPage) {
   const {
     register,
     handleSubmit,
@@ -25,8 +31,9 @@ export default function EditPostPage({ post, setEditForm }: EditPostPage) {
   } = useForm<editPostSchemaType>({
     resolver: zodResolver(editPostSchema),
   });
+  const API_BASE_URL = "http://localhost:3000";
   const { user } = useContext<UserContextType>(UserContext);
-
+  const navigate = useNavigate();
   const [editPost, setEditPost] = useState({
     title: post?.title ?? "",
     content: post?.content ?? "",
@@ -35,6 +42,10 @@ export default function EditPostPage({ post, setEditForm }: EditPostPage) {
     isPublished: post?.isPublished,
     imageUrl: post?.imageUrl ?? "",
   });
+
+  if (!setActiveLink) {
+    return undefined;
+  }
 
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -51,7 +62,22 @@ export default function EditPostPage({ post, setEditForm }: EditPostPage) {
   }
 
   const onSubmit: SubmitHandler<editPostSchemaType> = async (data) => {
-    console.log(data);
+    try {
+      await fetch(`${API_BASE_URL}/posts/${post?._id}/update`, {
+        method: "PUT",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setEditForm(false);
+      navigate(
+        `/user/${user?._id}/${data.isPublished ? "published" : "unpublished"}`,
+      );
+      setActiveLink(`${data.isPublished ? "published" : "unpublished"}`);
+    } catch (error) {
+      console.log("Handle edit post error", error);
+    }
   };
 
   return (

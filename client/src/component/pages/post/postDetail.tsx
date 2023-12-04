@@ -17,7 +17,7 @@ export default function PostDetail({
   const API_BASE_URL = "http://localhost:3000";
 
   useEffect(() => {
-    async function getPostAndComments() {
+    async function getPostWithComments() {
       try {
         const [postResponse, commentsResponse] = await Promise.all([
           fetch(`${API_BASE_URL}/posts/${postId}`, {
@@ -37,7 +37,7 @@ export default function PostDetail({
       }
     }
 
-    getPostAndComments();
+    getPostWithComments();
   }, [postId]);
 
   return (

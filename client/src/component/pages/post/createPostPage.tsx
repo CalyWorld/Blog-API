@@ -68,7 +68,7 @@ export default function CreatePostPage() {
         {...register("content")}
       ></textarea>
       <input
-        placeholder="Enter Image Url, Not Compulsory Though"
+        placeholder="http://www.imageUrl.com"
         className="p-3 text-xl"
         style={{ background: "rgb(235,231,231)" }}
         id="image-url"

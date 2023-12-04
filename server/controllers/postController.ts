@@ -106,14 +106,7 @@ exports.updatePost = [
       errors.array();
       res.json(postDetail);
     } else {
-      const updatedPost = await Post.findByIdAndUpdate(
-        req.params.id,
-        postDetail,
-        {},
-      );
-      if (!updatedPost) {
-        return null;
-      }
+      await Post.findByIdAndUpdate(req.params.id, postDetail, {});
       return new SuccessMsgResponse("Blog updated successfully").send(res);
     }
   }),

@@ -50,7 +50,6 @@ export default function UtilityPage({
         },
         body: JSON.stringify(postDetail),
       });
-      console.log(publicationStatus);
       if (setActiveLink) {
         setActiveLink(publicationStatus);
       }
@@ -62,11 +61,8 @@ export default function UtilityPage({
 
   async function handleDeletePost() {
     try {
-      await fetch(`http://localhost:3000/posts/${post._id}/delete`, {
+      await fetch(`${API_BASE_URL}/posts/${post._id}/delete`, {
         method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
       });
       navigate(`/user/${user?._id}`);
     } catch (error) {
