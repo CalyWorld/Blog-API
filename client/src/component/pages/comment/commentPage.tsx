@@ -6,6 +6,7 @@ import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../../../context/userContext";
 import EditCommentPage from "./editCommentPage";
 import { Comments } from "../../../interface/commentsProps";
+
 interface CommentPageType {
   comments?: Comments[];
 }

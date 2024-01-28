@@ -73,7 +73,7 @@ export default function PostDetail({
           </div>
           <div className="image-container flex flex-col items-center">
             {post.imageUrl && (
-              <img src={post.imageUrl} className="h-full" alt="image-post" />
+              <img src={post.imageUrl} className="h-full" alt="a post" />
             )}
           </div>
           <div className="mt-5">{post?.content}</div>
