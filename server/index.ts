@@ -80,12 +80,15 @@ passport.deserializeUser(async (id, done) => {
 app.use(logger("dev"));
 app.use(cookieParser());
 
-app.use("/", userRouter);
+app.use("/user", userRouter);
 app.use("/signin", signInRouter);
 app.use("/signup", signUpRouter);
 app.use("/logout", logOutRouter);
 app.use("/comments", commentRouter);
 app.use("/posts", postRouter);
+app.use("/", (req, res) => {
+  res.send("Welcome to express");
+});
 app.listen(port, () => {
   console.log(`Server is live at http://localhost:${port}`);
 });

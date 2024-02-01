@@ -34,7 +34,7 @@ exports.signUpPost = asyncHandler(
 
         try {
           await user.save();
-          res.redirect("/");
+          res.redirect("/user");
         } catch (err) {
           return next(err);
         }

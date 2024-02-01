@@ -5,7 +5,7 @@ import passport = require("passport");
 router.post(
   "/",
   passport.authenticate("local", {
-    successRedirect: "/",
+    successRedirect: "/user",
     failureRedirect: "/signin",
   }),
 );
