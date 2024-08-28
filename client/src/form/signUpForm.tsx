@@ -69,12 +69,12 @@ function SignUpForm({ setSignInForm, setSignUpForm }: AuthProps) {
         </div>
 
         <div className="input-form">
-          <div className="mb-1 gap-5 flex items-center">
-            <label className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
+          <div className="mb-1 gap-5 flex flex-col sm:flex-row items-center">
+            <label className="w-full sm:w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
               Username:
             </label>
             <input
-              className={`w-3/4 px-2 py-1 bg-white border rounded-md text-gray-700 shadow-sm focus:outline-none focus:border-blue-500 ${
+              className={`w-full sm:w-3/4 px-2 py-1 bg-white border rounded-md text-gray-700 shadow-sm focus:outline-none focus:border-blue-500 ${
                 errors.username ? "border-red-500" : ""
               }`}
               id="username"
@@ -90,17 +90,17 @@ function SignUpForm({ setSignInForm, setSignUpForm }: AuthProps) {
           )}
         </div>
 
-        <div className="input form">
-          <div className="mb-1 gap-5 flex items-center">
-            <label className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
+        <div className="input-form">
+          <div className="mb-1 gap-5 flex flex-col sm:flex-row items-center">
+            <label className="w-full sm:w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
               Password:
             </label>
             <input
-              className={`w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
+              className={`w-full sm:w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
                 errors.password ? "border-red-500" : ""
               }`}
               id="password"
-              type="text"
+              type="password"
               placeholder="Enter Password"
               {...register("password")}
             />
@@ -112,17 +112,17 @@ function SignUpForm({ setSignInForm, setSignUpForm }: AuthProps) {
           )}
         </div>
 
-        <div className="input form">
-          <div className="mb-1 gap-5 flex items-center">
-            <label className="w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
-              Confirm password:
+        <div className="input-form">
+          <div className="mb-1 gap-5 flex flex-col sm:flex-row items-center">
+            <label className="w-full sm:w-2/4 px-2 py-1 text-bold font-medium text-gray-700">
+              Confirm Password:
             </label>
             <input
-              className={`w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
+              className={`w-full sm:w-3/4 px-2 py-1 bg-white border rounded-md shadow-sm focus:outline-none focus:border-blue-500 ${
                 errors.confirmPassword ? "border-red-500" : ""
               }`}
               id="confirmPassword"
-              type="text"
+              type="password"
               placeholder="Confirm Password"
               {...register("confirmPassword")}
             />
@@ -133,6 +133,7 @@ function SignUpForm({ setSignInForm, setSignUpForm }: AuthProps) {
             </p>
           )}
         </div>
+
         <div className="mb-4">
           <button
             className="w-full py-2 px-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -141,6 +142,7 @@ function SignUpForm({ setSignInForm, setSignUpForm }: AuthProps) {
             Sign Up
           </button>
         </div>
+
         <div className="text-center">
           <p>
             Already have an account?{" "}

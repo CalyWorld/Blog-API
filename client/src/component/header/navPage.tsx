@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import NavProps from "../../interface/AuthProps";
 import { Outlet, Link } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa6";
 import ProfileModal from "../pages/profile/profileModal";
@@ -7,10 +6,13 @@ import Cookies from "js-cookie";
 import { UserContext, UserContextType } from "../../context/userContext";
 import { FaPenAlt } from "react-icons/fa";
 import FooterPage from "../footer/footer";
-export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
+import AuthProps from "../../interface/AuthProps";
+
+export default function Nav({ setSignInForm, setSignUpForm }: AuthProps) {
   const { user, setUser } = useContext<UserContextType>(UserContext);
   const [openProfileModal, setProfileModal] = useState<boolean>(false);
 
+  console.log(user);
   useEffect(() => {
     const userInfo = Cookies.get("userInfo");
     if (userInfo) {
@@ -19,10 +21,7 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
     }
   }, []);
 
-  if (!setSignInForm) {
-    return null;
-  }
-  if (!setSignUpForm) {
+  if (!setSignInForm || !setSignUpForm) {
     return null;
   }
 
@@ -30,9 +29,9 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
     <div className="min-h-screen flex flex-col">
       {user?.username ? (
         <header>
-          <nav className="flex justify-between border-b border-gray-400 pb-3">
+          <nav className="flex justify-between border-b border-gray-400 pb-3 items-center">
             <a href="/">
-              <h1>Infinite Insights</h1>
+              <h1 className="text-lg sm:text-xl">Infinite Insights</h1>
             </a>
             <ul className="flex gap-8 items-center">
               <Link to="/new-story">
@@ -46,9 +45,7 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
               <li>
                 <div
                   className="cursor-pointer"
-                  onClick={() => {
-                    setProfileModal(!openProfileModal);
-                  }}
+                  onClick={() => setProfileModal(!openProfileModal)}
                 >
                   <FaRegUser size={24} />
                 </div>
@@ -60,19 +57,23 @@ export default function Nav({ setSignInForm, setSignUpForm }: NavProps) {
           </nav>
         </header>
       ) : (
-        <nav className="flex justify-between border-b border-black pb-3">
+        <nav className="sm:items-center flex justify-between">
           <a href="/">
-            <h1>Infinite Insights</h1>
+            <h1 className="xs:text-3xl">Infinite Insights</h1>
           </a>
           <ul className="flex gap-5 items-center">
-            <li>
-              <button onClick={() => setSignInForm(true)}>Sign In</button>
-            </li>
-            <li>
+            <li className="xs:hidden sm:hidden md:block">
               <button
-                onClick={() => {
-                  setSignUpForm(true);
-                }}
+                onClick={() => setSignInForm(true)}
+                className="px-4 py-2 text-black"
+              >
+                Sign In
+              </button>
+            </li>
+            <li className="xs:block md:block">
+              <button
+                onClick={() => setSignUpForm(true)}
+                className="px-4 py-2 bg-black text-white rounded-full"
               >
                 Get Started
               </button>
